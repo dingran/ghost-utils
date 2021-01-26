@@ -1,19 +1,7 @@
 // The admin API client is the easiest way to use the API
 const GhostAdminAPI = require('@tryghost/admin-api');
 const truncate = require('truncate-html');
-import Cors from 'cors';
-import initMiddleware from '../../lib/init-middleware';
-
 const TRUNCATION_LENGTH = 500;
-
-// Initialize the cors middleware
-const cors = initMiddleware(
-  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
-  Cors({
-    // Only allow requests with GET, POST and OPTIONS
-    methods: ['GET', 'POST', 'OPTIONS'],
-  })
-);
 
 const api = new GhostAdminAPI({
   url: process.env.GHOST_URL,
@@ -22,7 +10,6 @@ const api = new GhostAdminAPI({
 });
 
 export default async (req, res) => {
-  await cors(req, res);
   const slug = req.query.slug;
   if (slug) {
     const length = TRUNCATION_LENGTH;
