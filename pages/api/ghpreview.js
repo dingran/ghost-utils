@@ -6,9 +6,17 @@ const dbAdmin = require('@/lib/db-admin');
 export default async (req, res) => {
   const siteId = req.query.siteId;
   const slug = req.query.slug;
-  if (slug === '' || slug === 'signup') {
+
+  //TODO: peridoically pull all posts and store their slugs
+  if (
+    slug === '' ||
+    slug === 'signup' ||
+    slug === 'signin' ||
+    slug === 'membership'
+  ) {
     res.statusCode = 200;
     res.json({});
+    return;
   }
 
   if (siteId && slug) {
