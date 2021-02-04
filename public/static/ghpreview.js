@@ -6,8 +6,8 @@
   var pathArray = window.location.pathname.replace(/\/$/, '').split('/');
   var slug = pathArray[pathArray.length - 1];
 
-  // var domainUrl = 'http://localhost:3000'; // local dev
-  var domainUrl = 'https://utils.dingran.me';
+  var url = new URL(ghpreviewScript.src);
+  var domainUrl = ghpreviewScript.src.replace(url.pathname, '');
   var previewEndpoint = `${domainUrl}/api/ghpreview?siteId=${siteId}&slug=${slug}`;
 
   var style = document.createElement('style'),
