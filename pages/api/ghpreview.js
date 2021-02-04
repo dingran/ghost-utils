@@ -43,9 +43,16 @@ export default async (req, res) => {
         'ms'
       );
 
+      let strippedString = response.html
+        .replace(/(<([^>]+)>)/gi, '')
+        .replace(/\n/g, '')
+        .trim();
+      // console.log(strippedString.trim());
+      const contentLength = strippedString.length;
+
       // preview ratio can overwrite preview length
       if (site.preview_ratio) {
-        length = Math.round(response.html.length * site.preview_ratio);
+        length = Math.round(contentLength * site.preview_ratio);
       }
 
       response.html = truncate(response.html, length);
