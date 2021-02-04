@@ -33,7 +33,7 @@ export default async (req, res) => {
 
     console.log('Init api', new Date().getTime() - startTime.getTime(), 'ms');
 
-    const length = site.truncation_length || 500;
+    let length = site.preview_length || 500;
 
     try {
       const response = await api.posts.read({ slug: slug, formats: 'html' });
@@ -42,6 +42,11 @@ export default async (req, res) => {
         new Date().getTime() - startTime.getTime(),
         'ms'
       );
+
+      // preview ratio can overwrite preview length
+      if (site.preview_ratio) {
+        length = Math.round(response.html.length * site.preview_ratio);
+      }
 
       response.html = truncate(response.html, length);
       console.log('Truncate', new Date().getTime() - startTime.getTime(), 'ms');

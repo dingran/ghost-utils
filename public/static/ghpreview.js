@@ -23,6 +23,8 @@
     bottom: 0;
     left: 0;
     height: 70%;
+    margin-left: -50vw;
+    margin-right: -50vw;
     background: linear-gradient(
       to top,
       rgba(255, 255, 255, 1) 0%,
