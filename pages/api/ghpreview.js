@@ -6,6 +6,10 @@ const dbAdmin = require('@/lib/db-admin');
 export default async (req, res) => {
   const siteId = req.query.siteId;
   const slug = req.query.slug;
+  if (slug === '' || slug === 'signup') {
+    res.statusCode = 200;
+    res.json({});
+  }
 
   if (siteId && slug) {
     const startTime = new Date();
