@@ -6,6 +6,15 @@
   var pathArray = window.location.pathname.replace(/\/$/, '').split('/');
   var slug = pathArray[pathArray.length - 1];
 
+  if (
+    slug === '' ||
+    slug === 'signup' ||
+    slug === 'signin' ||
+    slug === 'membership'
+  ) {
+    return;
+  }
+
   var url = new URL(ghpreviewScript.src);
   var domainUrl = ghpreviewScript.src.replace(url.pathname, '');
   var previewEndpoint = `${domainUrl}/api/ghpreview?siteId=${siteId}&slug=${slug}`;
