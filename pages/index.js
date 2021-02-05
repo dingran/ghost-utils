@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../lib/auth';
+import { useAuth } from '@/lib/auth';
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
