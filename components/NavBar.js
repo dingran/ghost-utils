@@ -12,6 +12,7 @@ import {
   Link,
   Icon,
   SkeletonCircle,
+  useMediaQuery,
 } from '@chakra-ui/react';
 
 import { useAuth } from '@/lib/auth';
@@ -27,6 +28,7 @@ const WrappedLink = ({ href, children }) => {
 const Navbar = (props) => {
   const { user, loading } = useAuth();
   const innerWidth = props.innerWidth || '1040px';
+  const [largeScreen] = useMediaQuery('(min-width: 700px)');
 
   return (
     <Flex
@@ -40,6 +42,7 @@ const Navbar = (props) => {
     >
       <Flex
         align='center'
+        whiteSpace='nowrap' // ensure signle line
         justifyContent='space-between'
         w='full'
         maxW={innerWidth}
@@ -50,11 +53,13 @@ const Navbar = (props) => {
           <WrappedLink href='/'>
             <Logo color='gray.800' boxSize={7}></Logo>
           </WrappedLink>
-          <WrappedLink href='/'>
-            <Box fontSize='lg' fontWeight='bold'>
-              Ghost Preview
-            </Box>
-          </WrappedLink>
+          {largeScreen ? (
+            <WrappedLink href='/'>
+              <Box fontSize='lg' fontWeight='bold'>
+                Ghost Preview
+              </Box>
+            </WrappedLink>
+          ) : null}
         </HStack>
         <HStack spacing={6}>
           <WrappedLink href='/faq'>FAQ</WrappedLink>

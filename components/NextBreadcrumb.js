@@ -3,7 +3,7 @@ import NextLink from 'next/link';
 
 const NextBreadcrumb = ({ pagePath, pageName }) => {
   return (
-    <Breadcrumb>
+    <Breadcrumb my={4}>
       <BreadcrumbItem>
         <NextLink href='/' passHref>
           <BreadcrumbLink>Home</BreadcrumbLink>

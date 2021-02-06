@@ -76,9 +76,8 @@ const SettingsTable = ({ stripeRole, children }) => (
   </Box>
 );
 
-const Account = () => {
+const Dashboard = () => {
   const { user, loading, signout } = useAuth();
-  const [isBillingLoading, setBillingLoading] = useState(false);
   if (!loading && !user) {
     Router.push('/');
   }
@@ -88,8 +87,8 @@ const Account = () => {
       {user ? (
         <PageShell>
           <NextBreadcrumb
-            pageName='Account'
-            pagePath='account'
+            pageName='Dashboard'
+            pagePath='dashboard'
           ></NextBreadcrumb>
           <Flex
             direction='column'
@@ -97,16 +96,6 @@ const Account = () => {
             align={['left', 'center']}
             margin='0 auto'
           >
-            <Flex direction='column' align={['left', 'center']} ml={4}>
-              <Avatar
-                w={['3rem', '6rem']}
-                h={['3rem', '6rem']}
-                mb={4}
-                src={user?.photoUrl}
-              />
-              <Heading letterSpacing='-1px'>{user?.name}</Heading>
-              <Text>{user?.email}</Text>
-            </Flex>
             <SettingsTable stripeRole={user?.stripeRole}>
               <FeedbackUsage />
               <Text my={4}>
@@ -114,29 +103,6 @@ const Account = () => {
                 subscription. You can also update card information and billing
                 addresses through the secure portal.
               </Text>
-              <Flex justify='flex-end'>
-                <Button variant='ghost' ml={4} onClick={() => signout()}>
-                  Log Out
-                </Button>
-                <Button
-                  onClick={() => {
-                    setBillingLoading(true);
-                    goToBillingPortal(); //TODO: to add
-                  }}
-                  backgroundColor='gray.900'
-                  color='white'
-                  fontWeight='medium'
-                  ml={4}
-                  isLoading={isBillingLoading}
-                  _hover={{ bg: 'gray.700' }}
-                  _active={{
-                    bg: 'gray.800',
-                    transform: 'scale(0.95)',
-                  }}
-                >
-                  Manage Billing
-                </Button>
-              </Flex>
             </SettingsTable>
           </Flex>
         </PageShell>
@@ -145,6 +111,6 @@ const Account = () => {
   );
 };
 
-const AccountPage = () => <Account />;
+const DashboardPage = () => <Dashboard />;
 
-export default AccountPage;
+export default DashboardPage;
