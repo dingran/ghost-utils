@@ -11,8 +11,8 @@ const LoginButtons = () => {
       <Button
         onClick={() => auth.signinWithTwitter()}
         leftIcon={<Twitter />}
-        mt={4}
-        mr={2}
+        my={4}
+        mx={2}
         _active={{
           // bg: 'gray.800',
           transform: 'scale(0.95)',
@@ -23,7 +23,8 @@ const LoginButtons = () => {
       <Button
         onClick={() => auth.signinWithGoogle()}
         leftIcon={<Google />}
-        mt={4}
+        my={4}
+        mx={2}
         _active={{
           transform: 'scale(0.95)',
         }}

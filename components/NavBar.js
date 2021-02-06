@@ -1,5 +1,6 @@
 import React from 'react';
 import NextLink from 'next/link';
+import { Logo } from './icons';
 import {
   Box,
   Button,
@@ -12,23 +13,31 @@ import {
 
 import { useAuth } from '@/lib/auth';
 
-const Navbar = ({ children }) => {
+const Navbar = (props) => {
   const { user } = useAuth();
+  const innerWidth = props.innerWidth || '1040px';
 
   return (
-    <Flex bgColor='brand.50' borderTop='5px solid' borderTopColor='gray.500'>
+    <Flex
+      bgColor='white'
+      borderTop='5px solid'
+      borderTopColor='brand.300'
+      boxShadow='base'
+      px={16}
+    >
       <Flex
         align='center'
         justifyContent='space-between'
         w='full'
-        maxW='950px'
+        maxW={innerWidth}
         m='0 auto'
-        my={4}
+        my={2}
       >
-        <Flex>
-          <Box>Logo</Box>
-        </Flex>
-        <HStack>
+        <HStack spacing={4}>
+          <Logo boxSize={8}></Logo>
+          <Box>Member-Only Content Preview for Ghost</Box>
+        </HStack>
+        <HStack spacing={6}>
           <Box>FAQ</Box>
           <Button>Login</Button>
         </HStack>

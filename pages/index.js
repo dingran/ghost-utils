@@ -6,6 +6,7 @@ import { Box } from '@chakra-ui/react';
 import LoginButtons from '@/components/LoginButtons';
 import AddSiteModal from '@/components/AddSiteModal';
 import Navbar from '@/components/NavBar';
+import PageShell from '@/components/PageShell';
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
@@ -14,7 +15,7 @@ export default function Home() {
   const auth = useAuth();
   return (
     <>
-      <Navbar></Navbar>
+      <PageShell></PageShell>
     </>
   );
 }
