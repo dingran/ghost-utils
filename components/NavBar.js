@@ -4,26 +4,38 @@ import { Logo } from './icons';
 import {
   Box,
   Button,
+  Heading,
+  Avatar,
   HStack,
   Flex,
   Link,
-  Avatar,
   Icon,
+  SkeletonCircle,
 } from '@chakra-ui/react';
 
 import { useAuth } from '@/lib/auth';
 
+const WrappedLink = ({ href, children }) => {
+  return (
+    <NextLink href={href} passHref>
+      <Link>{children}</Link>
+    </NextLink>
+  );
+};
+
 const Navbar = (props) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const innerWidth = props.innerWidth || '1040px';
 
   return (
     <Flex
       bgColor='white'
-      borderTop='5px solid'
+      borderTop='4px solid'
       borderTopColor='brand.300'
       boxShadow='base'
-      px={16}
+      px={[4, 8]}
+      mb={[2, 8]}
+      h='60px'
     >
       <Flex
         align='center'
@@ -34,12 +46,23 @@ const Navbar = (props) => {
         my={2}
       >
         <HStack spacing={4}>
-          <Logo boxSize={8}></Logo>
-          <Box>Member-Only Content Preview for Ghost</Box>
+          <WrappedLink href='/'>
+            <Logo color='gray.800' boxSize={7}></Logo>
+          </WrappedLink>
+          <WrappedLink href='/'>
+            <Box fontSize='lg' fontWeight='bold'>
+              Ghost Preview
+            </Box>
+          </WrappedLink>
         </HStack>
         <HStack spacing={6}>
-          <Box>FAQ</Box>
-          <Button>Login</Button>
+          <WrappedLink href='/faq'>FAQ</WrappedLink>
+          {loading ? <SkeletonCircle /> : null}
+          {user ? (
+            <WrappedLink href='/account'>
+              <Avatar size='sm' src={user?.photoUrl} />
+            </WrappedLink>
+          ) : null}
         </HStack>
       </Flex>
     </Flex>

@@ -1,6 +1,6 @@
 import React from 'react';
 import NextLink from 'next/link';
-import { Link, Flex } from '@chakra-ui/react';
+import { Link, Flex, HStack } from '@chakra-ui/react';
 
 const FooterLink = ({ href, children }) => {
   return (
@@ -14,12 +14,12 @@ const FooterLink = ({ href, children }) => {
 
 const Footer = () => {
   return (
-    <Flex mb={8} mt={24} justify='center'>
+    <HStack spacing={8} mb={8} mt={24} justify='center'>
       <FooterLink href='/privacy'>Privacy</FooterLink>
       <FooterLink href='/terms'>Terms</FooterLink>
       <FooterLink href='/faq'>FAQ</FooterLink>
       <FooterLink href='/'>Home</FooterLink>
-    </Flex>
+    </HStack>
   );
 };
 

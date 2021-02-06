@@ -14,9 +14,9 @@ const inner = {
 
 const DashboardShell = ({ children }) => {
   return (
-    <Flex backgroundColor='gray.100' direction='column' minH='100vh'>
+    <Flex direction='column' minH='100vh'>
       <Navbar innerWidth={inner.maxW} />
-      <Flex direction='column' {...inner}>
+      <Flex direction='column' {...inner} px={4}>
         {children}
       </Flex>
       <Footer />

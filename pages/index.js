@@ -2,11 +2,10 @@ import Head from 'next/head';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/lib/auth';
-import { Box } from '@chakra-ui/react';
-import LoginButtons from '@/components/LoginButtons';
-import AddSiteModal from '@/components/AddSiteModal';
-import Navbar from '@/components/NavBar';
+import { Flex, Box } from '@chakra-ui/react';
+import Hero from '@/components/Hero';
 import PageShell from '@/components/PageShell';
+import Showcase from '@/components/Showcase';
 
 export default function Home() {
   const { register, handleSubmit } = useForm();
@@ -15,7 +14,10 @@ export default function Home() {
   const auth = useAuth();
   return (
     <>
-      <PageShell></PageShell>
+      <PageShell>
+        <Hero />
+        <Showcase />
+      </PageShell>
     </>
   );
 }

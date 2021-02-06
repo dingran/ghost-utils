@@ -2,13 +2,14 @@ import { Button, Flex } from '@chakra-ui/react';
 
 import { useAuth } from '@/lib/auth';
 import { Github, Google, Twitter } from './icons';
+import { FcGoogle } from 'react-icons/fc';
 
 const LoginButtons = () => {
   const auth = useAuth();
 
   return (
     <Flex direction={['column', 'row']}>
-      <Button
+      {/* <Button
         onClick={() => auth.signinWithTwitter()}
         leftIcon={<Twitter />}
         my={4}
@@ -19,12 +20,13 @@ const LoginButtons = () => {
         }}
       >
         Continue with Twitter
-      </Button>
+      </Button> */}
       <Button
+        leftIcon='google'
+        variant='solid'
         onClick={() => auth.signinWithGoogle()}
-        leftIcon={<Google />}
+        leftIcon={<FcGoogle />}
         my={4}
-        mx={2}
         _active={{
           transform: 'scale(0.95)',
         }}

@@ -1,5 +1,11 @@
 // next.config.js
-module.exports = {
+const withImages = require('next-images');
+
+module.exports = withImages({
+  fileExtensions: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+  webpack(config, options) {
+    return config;
+  },
   async headers() {
     return [
       {
@@ -21,4 +27,4 @@ module.exports = {
       },
     ];
   },
-};
+});
