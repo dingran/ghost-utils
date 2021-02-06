@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Avatar,
   Heading,
@@ -15,32 +14,23 @@ import {
   BreadcrumbItem,
   Breadcrumb,
   BreadcrumbLink,
+  Grid,
+  GridItem,
 } from '@chakra-ui/react';
 
+import useSWR from 'swr';
 import { useAuth } from '@/lib/auth';
-// import { goToBillingPortal } from '@/lib/db';
+import fetcher from '@/utils/fetcher';
 import PageShell from '@/components/PageShell';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
 import Router from 'next/router';
+import AddSiteModal from '@/components/AddSiteModal';
 
-const FeedbackUsage = () => (
-  <StatGroup>
-    <Stat>
-      <StatLabel color='gray.700'>Feedback</StatLabel>
-      <StatNumber fontWeight='medium'>∞</StatNumber>
-      <StatHelpText>10,000 limit</StatHelpText>
-    </Stat>
+import ReactJson from 'react-json-view';
 
-    <Stat>
-      <StatLabel color='gray.700'>Sites</StatLabel>
-      <StatNumber fontWeight='medium'>1/∞</StatNumber>
-      <StatHelpText>Unlimited Sites</StatHelpText>
-    </Stat>
-  </StatGroup>
-);
-
-const SettingsTable = ({ stripeRole, children }) => (
+const SettingsCard = ({ title, children }) => (
   <Box
+    flexBasis='40%'
     backgroundColor='white'
     mt={8}
     borderRadius={[0, 8, 8]}
@@ -63,11 +53,8 @@ const SettingsTable = ({ stripeRole, children }) => (
           fontWeight='medium'
           mt={1}
         >
-          Settings
+          {title}
         </Text>
-        <Badge h='1rem' variantColor='blue'>
-          {stripeRole}
-        </Badge>
       </Flex>
     </Flex>
     <Flex direction='column' p={6}>
@@ -77,40 +64,71 @@ const SettingsTable = ({ stripeRole, children }) => (
 );
 
 const Dashboard = () => {
-  const { user, loading, signout } = useAuth();
+  const { user, loading } = useAuth();
   if (!loading && !user) {
     Router.push('/');
   }
 
+  const { data: sites } = useSWR(
+    user ? ['/api/sites', user.token] : null,
+    fetcher
+  );
+
   return (
     <>
+      <ReactJson src={sites} />;
       {user ? (
-        <PageShell>
+        <>
           <NextBreadcrumb
             pageName='Dashboard'
             pagePath='dashboard'
           ></NextBreadcrumb>
-          <Flex
-            direction='column'
-            maxW='600px'
-            align={['left', 'center']}
-            margin='0 auto'
-          >
-            <SettingsTable stripeRole={user?.stripeRole}>
-              <FeedbackUsage />
-              <Text my={4}>
-                Fast Feedback uses Stripe to update, change, or cancel your
-                subscription. You can also update card information and billing
-                addresses through the secure portal.
-              </Text>
-            </SettingsTable>
+          <Flex direction='row' justify='space-evenly'>
+            <SettingsCard title='Sites'>
+              <Grid
+                templateColumns='repeat(5, 1fr)'
+                gap={1}
+                alignItems='center'
+              >
+                <GridItem colSpan={3}>Site Name 1</GridItem>
+                <GridItem colStart={4} colEnd={6}>
+                  <Button>Details</Button>
+                </GridItem>
+
+                <GridItem colSpan={3} bg='tomato'>
+                  Site Name 1
+                </GridItem>
+                <GridItem colStart={4} colEnd={6} bg='papayawhip'>
+                  <Button>Details</Button>
+                </GridItem>
+
+                <GridItem colSpan={3} bg='tomato'>
+                  Site Name 1
+                </GridItem>
+                <GridItem colStart={4} colEnd={6} bg='papayawhip'>
+                  <Button>Details</Button>
+                </GridItem>
+                {/* <Box w='100%' h='10' bg='blue.500' />
+                <Box w='100%' h='10' bg='blue.500' />
+                <Box w='100%' h='10' bg='blue.500' />
+                <Box w='100%' h='10' bg='blue.500' />
+                <Box w='100%' h='10' bg='blue.500' /> */}
+              </Grid>
+              <AddSiteModal>Add a New Site</AddSiteModal>
+            </SettingsCard>
+
+            <SettingsCard title='Details'></SettingsCard>
           </Flex>
-        </PageShell>
+        </>
       ) : null}
     </>
   );
 };
 
-const DashboardPage = () => <Dashboard />;
+const DashboardPage = () => (
+  <PageShell>
+    <Dashboard />
+  </PageShell>
+);
 
 export default DashboardPage;

@@ -25,7 +25,7 @@ const AddSiteModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSubmit, register } = useForm();
 
-  const onCreateSite = ({ name, url }) => {
+  const onCreateSite = async ({ name, url }) => {
     const newSite = {
       authorId: auth.user.uid,
       createdAt: new Date().toISOString(),
@@ -38,22 +38,34 @@ const AddSiteModal = ({ children }) => {
       },
     };
 
-    const { id } = createSite(newSite);
-    toast({
-      title: 'Success!',
-      description: "We've added your site.",
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    });
+    try {
+      const { id } = await createSite(newSite);
 
-    // mutate(
-    //   ['/api/sites', auth.user.token],
-    //   async (data) => ({
-    //     sites: [{ id, ...newSite }, ...data.sites],
-    //   }),
-    //   false
-    // );
+      mutate(
+        ['/api/sites', auth.user.token],
+        async (data) => ({
+          sites: [{ id, ...newSite }, ...data.sites], //See "Mutate Based on Current Data" https://swr.vercel.app/docs/mutation
+        }),
+        false
+      );
+
+      toast({
+        title: 'Success! 🎉',
+        description: "We've added your site.",
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      toast({
+        title: 'Failed! 😢',
+        description: `We were not able to add you site, due to ${err.name}: ${err.message}`,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+
     onClose();
   };
 
@@ -79,7 +91,7 @@ const AddSiteModal = ({ children }) => {
           <ModalHeader fontWeight='bold'>Add Site</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Name</FormLabel>
               <Input
                 id='site-input'
@@ -91,11 +103,35 @@ const AddSiteModal = ({ children }) => {
               />
             </FormControl>
 
-            <FormControl mt={4}>
-              <FormLabel>Link</FormLabel>
+            <FormControl mt={4} isRequired>
+              <FormLabel>Website Url</FormLabel>
               <Input
                 id='link-input'
-                placeholder='https://website.com'
+                placeholder='https://example.com'
+                name='url'
+                ref={register({
+                  required: 'Required',
+                })}
+              />
+            </FormControl>
+
+            <FormControl mt={4} isRequired>
+              <FormLabel>Ghost Admin API Key</FormLabel>
+              <Input
+                id='api-input'
+                placeholder=''
+                name='api'
+                ref={register({
+                  required: 'Required',
+                })}
+              />
+            </FormControl>
+
+            <FormControl mt={4} isRequired>
+              <FormLabel>Ghost API Url</FormLabel>
+              <Input
+                id='api-url-input'
+                placeholder='https://example.ghost.io'
                 name='url'
                 ref={register({
                   required: 'Required',
