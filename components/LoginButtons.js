@@ -23,7 +23,7 @@ const LoginButtons = () => {
       </Button> */}
       <Button
         variant='solid'
-        onClick={() => auth.signinWithGoogle()}
+        onClick={() => auth.signinWithGoogle('/dashboard')}
         leftIcon={<FcGoogle />}
         my={4}
         _active={{
@@ -31,6 +31,9 @@ const LoginButtons = () => {
         }}
       >
         Continue with Google
+      </Button>
+      <Button my={4} onClick={(e) => auth.signout()}>
+        Sign Out
       </Button>
     </Flex>
   );
