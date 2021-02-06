@@ -1,6 +1,9 @@
 import PageShell from '@/components/PageShell';
+import NextBreadcrumb from '@/components/NextBreadcrumb';
 
 export default (props) => <PageShell {...props} />;
+
+<NextBreadcrumb pageName='FAQ' pagepath='faq' />
 
 # FAQ
 
@@ -10,6 +13,22 @@ blah blah
 
 here is another paragraph
 
-## Why is it free
+## What are the limitations?
+
+## How to get help?
+
+<p>
+  Email{' '}
+  <a
+    href='#'
+    class='cryptedmail'
+    data-name='hello'
+    data-domain='dingran'
+    data-tld='me'
+    onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;"
+  ></a>.
+</p>
+
+## Why is it free?
 
 blah blah

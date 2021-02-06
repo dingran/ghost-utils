@@ -58,7 +58,6 @@ const Navbar = (props) => {
         </HStack>
         <HStack spacing={6}>
           <WrappedLink href='/faq'>FAQ</WrappedLink>
-          {loading ? <SkeletonCircle /> : null}
           {user ? (
             <>
               <Button

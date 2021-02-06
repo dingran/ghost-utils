@@ -32,9 +32,6 @@ const LoginButtons = () => {
       >
         Continue with Google
       </Button>
-      <Button my={4} onClick={(e) => auth.signout()}>
-        Sign Out
-      </Button>
     </Flex>
   );
 };
