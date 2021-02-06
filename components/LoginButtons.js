@@ -5,7 +5,7 @@ import { Github, Google, Twitter } from './icons';
 import { FcGoogle } from 'react-icons/fc';
 
 const LoginButtons = () => {
-  const { user } = useAuth();
+  const auth = useAuth();
 
   return (
     <Flex direction={['column', 'row']}>
