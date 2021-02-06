@@ -1,5 +1,6 @@
 import React from 'react';
 import NextLink from 'next/link';
+import Router from 'next/router';
 import { Logo } from './icons';
 import {
   Box,
@@ -31,7 +32,7 @@ const Navbar = (props) => {
     <Flex
       bgColor='white'
       borderTop='4px solid'
-      borderTopColor='brand.300'
+      borderTopColor='brand.500'
       boxShadow='base'
       px={[4, 8]}
       mb={[2, 8]}
@@ -59,9 +60,18 @@ const Navbar = (props) => {
           <WrappedLink href='/faq'>FAQ</WrappedLink>
           {loading ? <SkeletonCircle /> : null}
           {user ? (
-            <WrappedLink href='/account'>
-              <Avatar size='sm' src={user?.photoUrl} />
-            </WrappedLink>
+            <>
+              <Button
+                onClick={() => {
+                  Router.push('/dashboard');
+                }}
+              >
+                Dashboard
+              </Button>
+              <WrappedLink href='/account'>
+                <Avatar size='sm' src={user?.photoUrl} />
+              </WrappedLink>
+            </>
           ) : null}
         </HStack>
       </Flex>

@@ -5,7 +5,7 @@ import { Github, Google, Twitter } from './icons';
 import { FcGoogle } from 'react-icons/fc';
 
 const LoginButtons = () => {
-  const auth = useAuth();
+  const { user } = useAuth();
 
   return (
     <Flex direction={['column', 'row']}>
@@ -22,7 +22,6 @@ const LoginButtons = () => {
         Continue with Twitter
       </Button> */}
       <Button
-        leftIcon='google'
         variant='solid'
         onClick={() => auth.signinWithGoogle()}
         leftIcon={<FcGoogle />}
