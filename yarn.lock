@@ -283,6 +283,14 @@
   dependencies:
     "@chakra-ui/utils" "1.1.0"
 
+"@chakra-ui/icons@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.4.tgz#f1c6cb4a7f65e9b1fa933a57ca682cc9a61c91d9"
+  integrity sha512-bFbyXGz+41Sf2/hcyOZbba1MXfYSrwdr2ph1r/qtTWrl0FPFpg5yPC9zPP6wtdf3+MtumbK9SxMyYneZ8KKJRA==
+  dependencies:
+    "@chakra-ui/icon" "1.1.0"
+    "@types/react" "^17.0.0"
+
 "@chakra-ui/image@1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-1.0.6.tgz#99fbdc21a589d2599e7066e78f27efe51a6e57d4"
@@ -1292,6 +1300,19 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
+"@types/prop-types@*":
+  version "15.7.3"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
+  integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
+
+"@types/react@^17.0.0":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.1.tgz#eb1f1407dea8da3bc741879c1192aa703ab9975b"
+  integrity sha512-w8t9f53B2ei4jeOqf/gxtc2Sswnc3LBK5s0DyJcg5xd10tMHXts2N31cKjWfH9IC/JvEPa/YF1U4YeP1t4R6HQ==
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^3.0.2"
 
 "@types/tinycolor2@1.4.2":
   version "1.4.2"
@@ -5751,6 +5772,13 @@ supports-color@^7.1.0:
   integrity sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==
   dependencies:
     has-flag "^4.0.0"
+
+swr@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-0.4.1.tgz#4bb1f9e994a8f8d7a2e9220dbc7aef296bc4a673"
+  integrity sha512-/jQWPjCwy7rNbEJKpuObfbtJHtneTKhlzjy8VkuAEGg/kkYhZoKWVdGtIXrz9vuTGdy/grLVWpA6DfiNk9ECWg==
+  dependencies:
+    dequal "2.0.2"
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"

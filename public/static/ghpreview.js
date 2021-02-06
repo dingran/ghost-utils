@@ -53,7 +53,7 @@
       div.innerHTML = data.response.html;
       div.className = 'ghpreview-membersonly-excerpt';
       document
-        .querySelector('aside[class*="upgrade-cta"]')
+        .querySelector('aside[class*="upgrade-cta"]') //TODO: allow custom selector
         .parentNode.prepend(div);
     });
 })();
