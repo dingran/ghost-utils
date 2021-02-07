@@ -17,7 +17,7 @@ const App = ({ Component, pageProps }) => {
   useEffect(() => {
     Fathom.load('WUGXVMLD', {
       url: 'https://amphibian.dingran.me/script.js',
-      excludedDomains: ['localhost'],
+      includedDomains: ['utils.dingran.me'],
     });
   }, []);
 
