@@ -48,15 +48,27 @@ const TableSkeleton = () => (
 );
 
 const TableContent = ({ sites }) => {
+  console.log(sites);
   return (
     <Tbody>
       {sites.map((site, index) => {
-        const key = site.apiKey;
-        const nchar = 8;
-        const apiKeyStr = `****${key.slice(Math.max(key.length - nchar, 0))}`;
+        const nchar = 6;
+        const apiKeyStr =
+          site.apiKey.length > nchar
+            ? `${site.apiKey.slice(0, nchar)}**`
+            : site.apiKey;
+        const siteIdStr =
+          site.id.length > nchar ? `${site.id.slice(0, nchar)}**` : site.id;
+
         return (
           <Box as='tr' key={site.id}>
-            <Td>{site.name}</Td>
+            <Td>
+              <NextLink href='/site/[siteId]' as={`/site/${site.id}`} passHref>
+                <Link id={`site-table-link-${index}`} fontWeight='medium'>
+                  {siteIdStr}
+                </Link>
+              </NextLink>
+            </Td>
             <Td>
               <Link href={site.url} isExternal>
                 {site.url}
@@ -79,19 +91,14 @@ const SiteTable = ({ sites }) => {
   return (
     <Box>
       {/* <ReactJson src={sites} / */}
-      <Table
-        w='full'
-        size='md'
-        borderRadius={8}
-        boxShadow='0px 4px 10px rgba(0, 0, 0, 0.05)'
-      >
-        <Thead bgColor='gray.50'>
+      <Table w='full' size='md' boxShadow='md'>
+        <Thead bgColor='gray.50' whiteSpace='nowrap'>
           <Tr>
-            <Th>Name</Th>
+            <Th>Id</Th>
             <Th>Site Link</Th>
-            <Th>Ghost API Url and Admin Key</Th>
+            <Th>Ghost API Url and Key</Th>
             <Th>Date Added</Th>
-            <Th></Th>
+            <Th>Edit</Th>
           </Tr>
         </Thead>
         {/* <TableSkeleton></TableSkeleton> */}

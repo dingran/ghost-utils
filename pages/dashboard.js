@@ -35,7 +35,10 @@ const DashboardPage = () => {
     Router.push('/');
   }
 
-  const { data } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
+  const { data } = useSWR(
+    user ? ['/api/auth/sites', user.token] : null,
+    fetcher
+  );
 
   return (
     <>

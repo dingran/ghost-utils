@@ -25,38 +25,78 @@ export default async (req, res) => {
     console.log('Get site', new Date().getTime() - startTime.getTime(), 'ms');
     console.log(site);
 
-    const api = new GhostAdminAPI({
-      url: site.apiUrl,
-      key: site.apiKey,
-      version: 'v3',
-    });
-
-    console.log('Init api', new Date().getTime() - startTime.getTime(), 'ms');
-
     let length = site.previewLength || 500;
 
     try {
-      const response = await api.posts.read({ slug: slug, formats: 'html' });
-      console.log(
-        'Read post',
-        new Date().getTime() - startTime.getTime(),
-        'ms'
-      );
+      const { preview } = await dbAdmin.getPreview(siteId, slug);
+      let response = null;
+      if (!preview) {
+        const api = new GhostAdminAPI({
+          url: site.apiUrl,
+          key: site.apiKey,
+          version: 'v3',
+        });
 
-      let strippedString = response.html
-        .replace(/(<([^>]+)>)/gi, '')
-        .replace(/\n/g, '')
-        .trim();
-      // console.log(strippedString.trim());
-      const contentLength = strippedString.length;
+        console.log(
+          'Init api',
+          new Date().getTime() - startTime.getTime(),
+          'ms'
+        );
 
-      // preview ratio can overwrite preview length
-      if (site.previewRatio) {
-        length = Math.round(contentLength * site.preview_ratio);
+        response = await api.posts.read({ slug: slug, formats: 'html' });
+        console.log(
+          'Read post',
+          new Date().getTime() - startTime.getTime(),
+          'ms'
+        );
+
+        let strippedString = response.html
+          .replace(/(<([^>]+)>)/gi, '')
+          .replace(/\n/g, '')
+          .trim();
+        // console.log(strippedString.trim());
+        const contentLength = strippedString.length;
+
+        // preview ratio can overwrite preview length
+        if (site.previewRatio) {
+          length = Math.round(contentLength * site.preview_ratio);
+        }
+
+        response.html = truncate(response.html, length);
+
+        console.log(
+          'Truncate',
+          new Date().getTime() - startTime.getTime(),
+          'ms'
+        );
+
+        const data = {
+          html: response.html,
+          createdAt: new Date().toISOString(),
+        };
+        try {
+          await dbAdmin.createPreview(siteId, slug, data);
+        } catch (error) {
+          console.log(error);
+          console.log('Failed to add preview to db');
+        }
+      } else {
+        // use existing preview, might bs stale
+        //TODO fix this, but checking whether the settings (e.g. preview etc) are updated after the time now
+        console.log(
+          site.createdAt,
+          preview.createdAt,
+          new Date(preview.createdAt),
+          new Date()
+        );
+        const diffTime = new Date() - new Date(preview.createdAt);
+        const diffDays = diffTime / (1000 * 60 * 60 * 24);
+        const diffMins = diffTime / (1000 * 60);
+        console.log(diffTime, diffMins, diffDays);
+        // response = { html: 'Using exsting preview' };
+        response = preview;
       }
 
-      response.html = truncate(response.html, length);
-      console.log('Truncate', new Date().getTime() - startTime.getTime(), 'ms');
       res.statusCode = 200;
       res.json({ response });
     } catch (error) {
