@@ -25,6 +25,7 @@ import PageShell from '@/components/PageShell';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
 import Router from 'next/router';
 import AddSiteModal from '@/components/AddSiteModal';
+import SiteTable from '@/components/SiteTable';
 
 import ReactJson from 'react-json-view';
 
@@ -69,14 +70,15 @@ const Dashboard = () => {
     Router.push('/');
   }
 
-  const { data: sites } = useSWR(
-    user ? ['/api/sites', user.token] : null,
-    fetcher
-  );
+  const { data } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
+
+  if (!data) {
+    return null; //TODO add skeleton when data is not ready
+  }
 
   return (
     <>
-      <ReactJson src={sites} />;
+      <SiteTable sites={data.sites} />
       {user ? (
         <>
           <NextBreadcrumb
