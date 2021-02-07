@@ -1,4 +1,5 @@
-import Link from 'next/link';
+import NextLink from 'next/link';
+import { Link } from '@chakra-ui/react';
 import Image from 'next/image';
 import { Box, Code, Heading } from '@chakra-ui/react';
 
@@ -8,9 +9,9 @@ const CustomLink = (props) => {
 
   if (isInternalLink) {
     return (
-      <Link href={href}>
+      <NextLink href={href}>
         <a {...props} />
-      </Link>
+      </NextLink>
     );
   }
 
