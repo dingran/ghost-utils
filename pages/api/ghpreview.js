@@ -26,14 +26,14 @@ export default async (req, res) => {
     console.log(site);
 
     const api = new GhostAdminAPI({
-      url: site.api_url,
-      key: site.admin_api_key,
+      url: site.apiUrl,
+      key: site.apiKey,
       version: 'v3',
     });
 
     console.log('Init api', new Date().getTime() - startTime.getTime(), 'ms');
 
-    let length = site.preview_length || 500;
+    let length = site.previewLength || 500;
 
     try {
       const response = await api.posts.read({ slug: slug, formats: 'html' });
@@ -51,7 +51,7 @@ export default async (req, res) => {
       const contentLength = strippedString.length;
 
       // preview ratio can overwrite preview length
-      if (site.preview_ratio) {
+      if (site.previewRatio) {
         length = Math.round(contentLength * site.preview_ratio);
       }
 
