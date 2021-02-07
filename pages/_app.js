@@ -3,8 +3,24 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from '@/styles/theme';
 import { MDXProvider } from '@mdx-js/react';
 import MDXComponents from '@/components/MDXComponents';
+import React, { useEffect } from 'react';
+import Router from 'next/router';
+import * as Fathom from 'fathom-client';
+
+// Record a pageview when route changes
+Router.events.on('routeChangeComplete', () => {
+  Fathom.trackPageview();
+});
 
 const App = ({ Component, pageProps }) => {
+  // Initialize Fathom when the app loads
+  useEffect(() => {
+    Fathom.load('WUGXVMLD', {
+      url: 'https://amphibian.dingran.me/script.js',
+      excludedDomains: ['localhost'],
+    });
+  }, []);
+
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
