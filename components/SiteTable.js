@@ -15,7 +15,9 @@ import {
   Tr,
   Th,
   Td,
+  Icon,
 } from '@chakra-ui/react';
+import { IoInformationCircleOutline } from 'react-icons/io5';
 
 // import DeleteSiteButton from './DeleteSiteButton';
 
@@ -48,7 +50,6 @@ const TableSkeleton = () => (
 );
 
 const TableContent = ({ sites }) => {
-  console.log(sites);
   return (
     <Tbody>
       {sites.map((site, index) => {
@@ -94,7 +95,9 @@ const SiteTable = ({ sites }) => {
       <Table w='full' size='md' boxShadow='md'>
         <Thead bgColor='gray.50' whiteSpace='nowrap'>
           <Tr>
-            <Th>Id</Th>
+            <Th>
+              Id <IoInformationCircleOutline sx={{ display: 'inline' }} />
+            </Th>
             <Th>Site Link</Th>
             <Th>Ghost API Url and Key</Th>
             <Th>Date Added</Th>

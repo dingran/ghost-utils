@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react';
 
 import useSWR from 'swr';
-import { useAuth } from '@/lib/auth';
+import { useAuth, getFreshToken } from '@/lib/auth';
 import fetcher from '@/utils/fetcher';
 import PageShell from '@/components/PageShell';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
