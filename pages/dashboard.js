@@ -20,7 +20,7 @@ import {
 
 import { useState } from 'react';
 import useSWR from 'swr';
-import { useAuth, getFreshToken } from '@/lib/auth';
+import { useAuth } from '@/lib/auth';
 import fetcher from '@/utils/fetcher';
 import PageShell from '@/components/PageShell';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
@@ -48,7 +48,7 @@ const SiteDetails = ({ site }) => {
 };
 
 const DashboardPage = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, getFreshToken } = useAuth();
 
   const [selectedSiteId, setSelectedSiteId] = useState(null);
 
@@ -56,10 +56,19 @@ const DashboardPage = () => {
     Router.push('/');
   }
 
-  const { data } = useSWR(
+  const { data, error } = useSWR(
     user ? ['/api/auth/sites', user.token] : null,
     fetcher
   );
+
+  if (error) {
+    console.log('error from useSWR', error);
+    console.log(error.info.code);
+    console.log('refreshing token');
+    getFreshToken().then((token) => {
+      console.log(token);
+    });
+  }
 
   return (
     <>
