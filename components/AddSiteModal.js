@@ -48,10 +48,14 @@ const AddSiteModal = ({ children }) => {
       const { id } = await createSite(newSite);
 
       mutate(
-        ['/api/sites', auth.user.token],
-        async (data) => ({
-          sites: [{ id, ...newSite }, ...data.sites], //See "Mutate Based on Current Data" https://swr.vercel.app/docs/mutation
-        }),
+        ['/api/auth/sites', auth.user.token],
+        async (data) => {
+          const newData = {
+            sites: [{ id, ...newSite }, ...data.sites],
+            //See "Mutate Based on Current Data" https://swr.vercel.app/docs/mutation
+          };
+          return newData;
+        },
         false
       );
 

@@ -18,6 +18,7 @@ import {
   GridItem,
 } from '@chakra-ui/react';
 
+import { useState } from 'react';
 import useSWR from 'swr';
 import { useAuth, getFreshToken } from '@/lib/auth';
 import fetcher from '@/utils/fetcher';
@@ -29,8 +30,28 @@ import SiteTable from '@/components/SiteTable';
 
 import ReactJson from 'react-json-view';
 
+const DashboardHeader = () => (
+  <Box>
+    <Flex justifyContent='space-between'>
+      <Heading mb={8}>My Sites</Heading>
+      <AddSiteModal>+ Add Site</AddSiteModal>
+    </Flex>
+  </Box>
+);
+
+const SiteDetails = ({ site }) => {
+  return (
+    <Box>
+      <ReactJson src={site} />
+    </Box>
+  );
+};
+
 const DashboardPage = () => {
   const { user, loading } = useAuth();
+
+  const [selectedSiteId, setSelectedSiteId] = useState(null);
+
   if (!loading && !user) {
     Router.push('/');
   }
@@ -48,7 +69,12 @@ const DashboardPage = () => {
             pageName='Dashboard'
             pagePath='dashboard'
           ></NextBreadcrumb>
-          <SiteTable sites={data?.sites} />
+
+          <DashboardHeader></DashboardHeader>
+          <SiteTable
+            sites={data?.sites}
+            setSelectedSiteId={setSelectedSiteId}
+          />
         </PageShell>
       ) : null}
     </>

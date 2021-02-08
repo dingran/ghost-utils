@@ -88,7 +88,7 @@ const TableContent = ({ sites }) => {
   );
 };
 
-const SiteTable = ({ sites }) => {
+const SiteTable = ({ sites, setSelectedSiteId }) => {
   return (
     <Box>
       {/* <ReactJson src={sites} / */}
