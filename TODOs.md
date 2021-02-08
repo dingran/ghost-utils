@@ -1,5 +1,6 @@
 - [x] add add new site button to dashboard
-- [ ] set up firestore access rule for webhook creation
-- [ ] add the webhook creation into somewhere in the site registration flow
+- [x] set up firestore access rule for webhook creation
+- [x] add the webhook creation into somewhere in the site registration flow
 - [ ] add site edit flow
+- [ ] add ways to create webhook later
 - [ ] test out post.unpublished and post.published event handling

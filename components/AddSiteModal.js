@@ -1,5 +1,7 @@
 import { get, useForm } from 'react-hook-form';
 import { mutate } from 'swr';
+import axios from 'axios';
+
 import {
   Modal,
   ModalOverlay,
@@ -62,6 +64,20 @@ const AddSiteModal = ({ children }) => {
       toast({
         title: 'Success! 🎉',
         description: "We've added your site.",
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+
+      const resp = await axios.get(`/api/auth/ghostwebhooks?siteId=${id}`, {
+        headers: { token: auth.user.token },
+      });
+      console.log(resp);
+
+      toast({
+        title: 'Success! 🎉',
+        description:
+          "We've added webhooks to sync your post updates with preview.",
         status: 'success',
         duration: 5000,
         isClosable: true,

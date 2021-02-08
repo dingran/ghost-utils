@@ -49,7 +49,7 @@ function ping(url, multiplier) {
     // Set a timeout for max-pings, 5s.
     setTimeout(function () {
       reject(Error('Timeout'));
-    }, 1000);
+    }, 3000);
   });
 }
 
