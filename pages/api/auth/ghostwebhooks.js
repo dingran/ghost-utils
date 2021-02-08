@@ -39,13 +39,15 @@ export default async (req, res) => {
       ];
       events.forEach(async (val) => {
         const payload = {
+          name: val,
           event: val,
-          target_url: 'https://utils.dingran.me/api/ghosthook/',
+          target_url: `https://utils.dingran.me/api/ghosthook?siteId=${siteId}`,
+          // target_url: `https://9fe4cde0519b.ngrok.io/api/ghosthook?siteId=${siteId}`,
         };
 
         try {
           const response = await api.webhooks.add(payload);
-          dbAdmin.createWebhook(siteId, payload.event, response);
+          await dbAdmin.createWebhook(siteId, payload.event, response);
         } catch (error) {
           if (
             error.context === 'Target URL has already been used for this event.'

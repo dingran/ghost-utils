@@ -1,7 +1,7 @@
 // this is the public version of ghost.js
 const GhostAdminAPI = require('@tryghost/admin-api');
-const truncate = require('truncate-html');
 const dbAdmin = require('@/lib/db-admin');
+import truncateHtml from '@/utils/truncateHtml';
 
 export default async (req, res) => {
   const siteId = req.query.siteId;
@@ -14,8 +14,7 @@ export default async (req, res) => {
     slug === 'signin' ||
     slug === 'membership'
   ) {
-    res.statusCode = 200;
-    res.json({});
+    res.status(200).send({});
     return;
   }
 
@@ -24,8 +23,6 @@ export default async (req, res) => {
     const { site } = await dbAdmin.getSite(siteId);
     console.log('Get site', new Date().getTime() - startTime.getTime(), 'ms');
     console.log(site);
-
-    let length = site.previewLength || 500;
 
     try {
       const { preview } = await dbAdmin.getPreview(siteId, slug);
@@ -50,19 +47,11 @@ export default async (req, res) => {
           'ms'
         );
 
-        let strippedString = response.html
-          .replace(/(<([^>]+)>)/gi, '')
-          .replace(/\n/g, '')
-          .trim();
-        // console.log(strippedString.trim());
-        const contentLength = strippedString.length;
-
-        // preview ratio can overwrite preview length
-        if (site.previewRatio) {
-          length = Math.round(contentLength * site.preview_ratio);
-        }
-
-        response.html = truncate(response.html, length);
+        response.html = truncateHtml(
+          response.html,
+          site.previewLength,
+          site.previewRatio
+        );
 
         console.log(
           'Truncate',
@@ -82,13 +71,8 @@ export default async (req, res) => {
         }
       } else {
         // use existing preview, might bs stale
-        //TODO fix this, but checking whether the settings (e.g. preview etc) are updated after the time now
-        console.log(
-          site.createdAt,
-          preview.createdAt,
-          new Date(preview.createdAt),
-          new Date()
-        );
+        //TODO fix this, but checking whether the settings are updated after the preview creation time
+        console.log(site.createdAt, site.updatedAt, preview.createdAt);
         const diffTime = new Date() - new Date(preview.createdAt);
         const diffDays = diffTime / (1000 * 60 * 60 * 24);
         const diffMins = diffTime / (1000 * 60);
