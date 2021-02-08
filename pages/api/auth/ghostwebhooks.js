@@ -27,46 +27,41 @@ export default async (req, res) => {
     return;
   }
 
-  const op = req.query.op;
+  try {
+    const events = [
+      'post.published',
+      'post.published.edited',
+      'post.unpublished',
+    ];
+    events.forEach(async (val) => {
+      const payload = {
+        name: val,
+        event: val,
+        target_url: `https://utils.dingran.me/api/ghosthook?siteId=${siteId}`,
+        // target_url: `https://9fe4cde0519b.ngrok.io/api/ghosthook?siteId=${siteId}`,
+      };
 
-  if (op === 'create') {
-    const event = req.query.event;
-    try {
-      const events = [
-        'post.published',
-        'post.published.edited',
-        'post.unpublished',
-      ];
-      events.forEach(async (val) => {
-        const payload = {
-          name: val,
-          event: val,
-          target_url: `https://utils.dingran.me/api/ghosthook?siteId=${siteId}`,
-          // target_url: `https://9fe4cde0519b.ngrok.io/api/ghosthook?siteId=${siteId}`,
-        };
-
-        try {
-          const response = await api.webhooks.add(payload);
-          await dbAdmin.createWebhook(siteId, payload.event, response);
-        } catch (error) {
-          if (
-            error.context === 'Target URL has already been used for this event.'
-          ) {
-            console.log('webhook already exists', payload);
-          } else {
-            console.log(error);
-          }
+      try {
+        const response = await api.webhooks.add(payload);
+        await dbAdmin.createWebhook(siteId, payload.event, response);
+      } catch (error) {
+        if (
+          error.context === 'Target URL has already been used for this event.'
+        ) {
+          console.log('webhook already exists', payload);
+        } else {
+          console.log(error);
         }
-      });
+      }
+    });
 
-      const { webhooks } = await dbAdmin.getWebhooks(siteId);
+    const { webhooks } = await dbAdmin.getWebhooks(siteId);
 
-      res.statusCode = 200;
-      res.json({ message: 'success', webhooks });
-    } catch (error) {
-      console.log(error);
-      res.statusCode = 500;
-      res.json({ error });
-    }
+    res.statusCode = 200;
+    res.json({ message: 'success', webhooks });
+  } catch (error) {
+    console.log(error);
+    res.statusCode = 500;
+    res.json({ error });
   }
 };
