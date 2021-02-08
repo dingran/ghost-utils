@@ -3,11 +3,47 @@ const dbAdmin = require('@/lib/db-admin');
 import { auth } from '@/lib/firebase-admin';
 
 export default async (req, res) => {
-  // auth protection
-  // const { uid } = await auth.verifyIdToken(req.headers.token)
-
+  // auth
+  if (!req.headers.token) {
+    res.status(401);
+    res.json({ error: 'Please include id token' });
+    return;
+  }
   const siteId = req.query.siteId;
-  const { site } = await dbAdmin.getSite(siteId);
+  if (!siteId) {
+    res.status(400);
+    res.json({ error: 'Please include siteId in query params' });
+    return;
+  }
+
+  try {
+    const { uid } = await auth.verifyIdToken(req.headers.token);
+    req.uid = uid;
+  } catch (error) {
+    console.log(error);
+    res.status(401);
+    res.json({ error: error.message });
+    return;
+  }
+
+  // authorized
+  let site = {};
+  try {
+    const data = await dbAdmin.getSite(siteId);
+    site = data.site;
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: `Can't get site ${siteId}` });
+    return;
+  }
+
+  if (site.authorId !== req.uid) {
+    res.status(403).json({
+      error: `Your user id (${req.uid}) does not match site owner's user id ${site.authorId}`,
+    });
+    return;
+  }
+
   const apiUrl = site.apiUrl;
   const apiKey = site.apiKey;
 
@@ -23,7 +59,7 @@ export default async (req, res) => {
   } catch (error) {
     console.log(error);
     res.statusCode = 400;
-    res.json({ error });
+    res.json({ error: 'Unable to initialized Ghost API' });
     return;
   }
 
