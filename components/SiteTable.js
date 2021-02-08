@@ -95,9 +95,7 @@ const SiteTable = ({ sites }) => {
       <Table w='full' size='md' boxShadow='md'>
         <Thead bgColor='gray.50' whiteSpace='nowrap'>
           <Tr>
-            <Th>
-              Id <IoInformationCircleOutline sx={{ display: 'inline' }} />
-            </Th>
+            <Th>Id </Th>
             <Th>Site Link</Th>
             <Th>Ghost API Url and Key</Th>
             <Th>Date Added</Th>
