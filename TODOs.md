@@ -1,8 +1,9 @@
 - [x] add add new site button to dashboard
 - [x] set up firestore access rule for webhook creation
 - [x] add the webhook creation into somewhere in the site registration flow
-- [ ] add site details view
-- [ ] add site edit flow
+- [ ] adjust site table to show read only content (stats etc)
+- [ ] add site details view, as a modal
+- [ ] add site edit flow, through a modal
 - [ ] add ways to create webhook later
 - [ ] test out post.unpublished and post.published event handling
 - [ ] try and fix the following fireabase auth error

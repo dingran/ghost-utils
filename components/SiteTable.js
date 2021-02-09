@@ -2,7 +2,6 @@ import React from 'react';
 import NextLink from 'next/link';
 import { parseISO, format } from 'date-fns';
 import ReactJson from 'react-json-view';
-import EditSiteButton from '@/components/EditSiteButton';
 import {
   Box,
   Button,
@@ -17,6 +16,7 @@ import {
   Td,
   Icon,
 } from '@chakra-ui/react';
+import { FaEdit } from 'react-icons/fa';
 import { IoInformationCircleOutline } from 'react-icons/io5';
 
 // import DeleteSiteButton from './DeleteSiteButton';
@@ -49,6 +49,19 @@ const TableSkeleton = () => (
   </Tbody>
 );
 
+function EditSiteButton({ siteId }) {
+  const clickHandler = () => {
+    console.log(siteId);
+  };
+  return (
+    <Box color='gray.600'>
+      <Link onClick={clickHandler}>
+        <FaEdit />
+      </Link>
+    </Box>
+  );
+}
+
 const TableContent = ({ sites, setSelectedSiteId }) => {
   const onClickHandler = (siteId) => {
     setSelectedSiteId(siteId);
@@ -61,8 +74,8 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
           site.apiKey.length > nchar
             ? `${site.apiKey.slice(0, nchar)}**`
             : site.apiKey;
-        const siteIdStr =
-          site.id.length > nchar ? `${site.id.slice(0, nchar)}**` : site.id;
+        // const siteIdStr =
+        //   site.id.length > nchar ? `${site.id.slice(0, nchar)}**` : site.id;
 
         return (
           <Box as='tr' key={site.id}>
@@ -74,16 +87,18 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
                   onClickHandler(site.id);
                 }}
               >
-                {siteIdStr}
+                {site.name}
               </Link>
             </Td>
+
+            <Td>{site.id}</Td>
             <Td>
               <Link href={site.url} isExternal>
                 {site.url}
               </Link>
             </Td>
-            <Td>{`${site.apiUrl} | ${apiKeyStr}`}</Td>
-            <Td>{format(parseISO(site.createdAt), 'P')}</Td>
+            {/* <Td>{`${site.apiUrl} | ${apiKeyStr}`}</Td> */}
+            <Td>{format(parseISO(site.createdAt), 'PPpp')}</Td>
 
             <Td>
               <EditSiteButton siteId={site.id} />
@@ -102,9 +117,10 @@ const SiteTable = ({ sites, setSelectedSiteId }) => {
       <Table w='full' size='md' boxShadow='md'>
         <Thead bgColor='gray.50' whiteSpace='nowrap'>
           <Tr>
+            <Th>Name </Th>
             <Th>Id </Th>
             <Th>Site Link</Th>
-            <Th>Ghost API Url and Key</Th>
+            {/* <Th>Ghost API Url and Key</Th> */}
             <Th>Date Added</Th>
             <Th>Edit</Th>
           </Tr>
