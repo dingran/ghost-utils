@@ -3,7 +3,7 @@ const fetcher = async (url, token) => {
     method: 'GET',
     headers: new Headers({
       'Content-Type': 'application/json',
-      // Authorization: `Bearer ${token}`, //this is proper but harder to parse
+      Authorization: `Bearer ${token}`, //this is proper but harder to parse
       token,
     }),
     credentials: 'same-origin',

@@ -1,6 +1,7 @@
+import { withAuth } from '@/lib/middlewares';
 import { getSite } from '@/lib/db-admin';
 
-export default async (req, res) => {
+const handler = async (req, res) => {
   try {
     const { siteId } = req.query;
     const { site } = await getSite(siteId);
@@ -10,3 +11,5 @@ export default async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+export default withAuth(handler);
