@@ -49,7 +49,10 @@ const TableSkeleton = () => (
   </Tbody>
 );
 
-const TableContent = ({ sites }) => {
+const TableContent = ({ sites, setSelectedSiteId }) => {
+  const onClickHandler = (siteId) => {
+    setSelectedSiteId(siteId);
+  };
   return (
     <Tbody>
       {sites.map((site, index) => {
@@ -64,11 +67,15 @@ const TableContent = ({ sites }) => {
         return (
           <Box as='tr' key={site.id}>
             <Td>
-              <NextLink href='/site/[siteId]' as={`/site/${site.id}`} passHref>
-                <Link id={`site-table-link-${index}`} fontWeight='medium'>
-                  {siteIdStr}
-                </Link>
-              </NextLink>
+              <Link
+                id={`site-table-link-${index}`}
+                fontWeight='medium'
+                onClick={() => {
+                  onClickHandler(site.id);
+                }}
+              >
+                {siteIdStr}
+              </Link>
             </Td>
             <Td>
               <Link href={site.url} isExternal>
@@ -103,7 +110,11 @@ const SiteTable = ({ sites, setSelectedSiteId }) => {
           </Tr>
         </Thead>
         {/* <TableSkeleton></TableSkeleton> */}
-        {sites ? <TableContent sites={sites} /> : <TableSkeleton />}
+        {sites ? (
+          <TableContent sites={sites} setSelectedSiteId={setSelectedSiteId} />
+        ) : (
+          <TableSkeleton />
+        )}
       </Table>
     </Box>
   );
