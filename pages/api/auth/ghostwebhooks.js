@@ -1,47 +1,28 @@
 const GhostAdminAPI = require('@tryghost/admin-api');
 const dbAdmin = require('@/lib/db-admin');
-import { auth } from '@/lib/firebase-admin';
+import { withAuth } from '@/lib/middlewares';
 
-export default async (req, res) => {
-  // auth
-  if (!req.headers.token) {
-    res.status(401);
-    res.json({ error: 'Please include id token' });
-    return;
-  }
+const handler = async (req, res) => {
   const siteId = req.query.siteId;
   if (!siteId) {
-    res.status(400);
-    res.json({ error: 'Please include siteId in query params' });
-    return;
+    return res
+      .status(400)
+      .json({ error: 'Please include siteId in query params' });
   }
 
-  try {
-    const { uid } = await auth.verifyIdToken(req.headers.token);
-    req.uid = uid;
-  } catch (error) {
-    console.log(error);
-    res.status(401);
-    res.json({ error: error.message });
-    return;
-  }
-
-  // authorized
   let site = {};
   try {
     const data = await dbAdmin.getSite(siteId);
     site = data.site;
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: `Can't get site ${siteId}` });
-    return;
+    return res.status(500).json({ error: `Can't get site ${siteId}` });
   }
 
   if (site.authorId !== req.uid) {
-    res.status(403).json({
+    return res.status(403).json({
       error: `Your user id (${req.uid}) does not match site owner's user id ${site.authorId}`,
     });
-    return;
   }
 
   const apiUrl = site.apiUrl;
@@ -58,9 +39,7 @@ export default async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.statusCode = 400;
-    res.json({ error: 'Unable to initialized Ghost API' });
-    return;
+    return res.status(400).json({ error: 'Unable to initialized Ghost API' });
   }
 
   try {
@@ -93,11 +72,11 @@ export default async (req, res) => {
 
     const { webhooks } = await dbAdmin.getWebhooks(siteId);
 
-    res.statusCode = 200;
-    res.json({ message: 'success', webhooks });
+    return res.status(200).json({ message: 'success', webhooks });
   } catch (error) {
     console.log(error);
-    res.statusCode = 500;
-    res.json({ error });
+    return res.status(500).json({ error: error.message });
   }
 };
+
+export default withAuth(handler);

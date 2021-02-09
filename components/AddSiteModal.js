@@ -46,14 +46,15 @@ const AddSiteModal = ({ children }) => {
       apiUrl,
     };
 
+    let siteId = null;
     try {
-      const { id } = await createSite(newSite);
+      ({ id: siteId } = await createSite(newSite));
 
       mutate(
         ['/api/auth/sites', auth.user.token],
         async (data) => {
           const newData = {
-            sites: [{ id, ...newSite }, ...data.sites],
+            sites: [{ id: siteId, ...newSite }, ...data.sites],
             //See "Mutate Based on Current Data" https://swr.vercel.app/docs/mutation
           };
           return newData;
@@ -68,9 +69,19 @@ const AddSiteModal = ({ children }) => {
         duration: 5000,
         isClosable: true,
       });
+    } catch (err) {
+      toast({
+        title: 'Failed! 😢',
+        description: `We were not able to add you site, due to ${err.name}: ${err.message}`,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
 
-      const resp = await axios.get(`/api/auth/ghostwebhooks?siteId=${id}`, {
-        headers: { token: auth.user.token },
+    try {
+      const resp = await axios.get(`/api/auth/ghostwebhooks?siteId=${siteId}`, {
+        headers: { Authorization: `Bearer ${auth.user.token}` },
       });
       console.log(resp);
 
@@ -84,10 +95,10 @@ const AddSiteModal = ({ children }) => {
       });
     } catch (err) {
       toast({
-        title: 'Failed! 😢',
-        description: `We were not able to add you site, due to ${err.name}: ${err.message}`,
-        status: 'error',
-        duration: 5000,
+        title: 'Warning 😢',
+        description: `We were not able to add webhooks. But your preview should still work, it's just slower.\n (${err.name}: ${err.message}.)`,
+        status: 'warning',
+        duration: 9000,
         isClosable: true,
       });
     }
