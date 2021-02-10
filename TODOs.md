@@ -3,8 +3,10 @@
 - [x] add the webhook creation into somewhere in the site registration flow
 - [x] adjust site table to show read only content (stats etc)
 - [ ] show some stats/analytics for each site?
-- [ ] add site details view, as a modal
-- [ ] add site edit flow, through a modal
+- [ ] add site details view, as a modal?
+- [ ] refactor add site vs edit site modal, too much repeated logic
+- [ ] edit site modal used the write mutation flow, need to change add site modal to match that
+- [x ] add site edit flow, through a modal
 - [ ] add ways to create webhook later
 - [ ] set up logflare for vercel
 - [ ] learn about next-seo
