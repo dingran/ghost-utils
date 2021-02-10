@@ -4,11 +4,23 @@ service cloud.firestore {
     match /users/{uid} {
       allow read, write: if isUser(uid);
     }
-    match /sites/{uid} {
+    match /ghost_sites/{site} {
       allow read: if isOwner();
       allow delete: if isOwner();
       allow update: if isOwner() && willBeOwner();
       allow create: if willBeOwner();
+      
+      function siteData() {
+  			return get(/databases/$(database)/documents/ghost_sites/$(site)).data 
+  		}
+      
+      match /webhooks/{hook} {
+      	allow read, write: if siteData().authorId == request.auth.uid
+      }
+      
+      match /pages/{page} {
+      	allow read, write: if siteData().authorId == request.auth.uid
+      }
     }
   }
 }
@@ -36,3 +48,4 @@ function currentData() {
 function incomingData() {
   return request.resource.data;
 }
+
