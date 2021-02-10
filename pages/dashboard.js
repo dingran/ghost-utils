@@ -51,7 +51,7 @@ const SiteDetails = ({ site }) => {
 };
 
 const DashboardPage = () => {
-  const { user, loading, getFreshToken } = useAuth();
+  const { user, loading } = useAuth();
 
   const [selectedSiteId, setSelectedSiteId] = useState(null);
 
@@ -73,7 +73,7 @@ const DashboardPage = () => {
   //   });
   // }
 
-  const { data: siteData, error: siteError } = useSWR(
+  const { data: siteData } = useSWR(
     user && selectedSiteId
       ? [`/api/auth/site/${selectedSiteId}`, user.token]
       : null,

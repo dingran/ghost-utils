@@ -3,6 +3,8 @@ import { mutate } from 'swr';
 import axios from 'axios';
 
 import {
+  Box,
+  Link,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -26,51 +28,67 @@ import { useAuth } from '@/lib/auth';
 
 import { useState } from 'react';
 import { startsWithHttp, validUrl, reachUrl } from '@/utils/urltest';
+import { FaEdit } from 'react-icons/fa';
+import useSWR from 'swr';
+import fetcher from '@/utils/fetcher';
 
-const AddSiteModal = ({ children }) => {
+const EditSiteModal = ({ site }) => {
   const toast = useToast();
   const auth = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { handleSubmit, register, errors, getValues } = useForm({
     mode: 'onTouched',
     defaultValues: {
-      previewRatio: 0.4,
+      id: site.id,
+      name: site.name,
+      url: site.url,
+      apiUrl: site.apiUrl,
+      apiKey: site.apiKey,
+      previewRatio: site.previewRatio || 0.4,
     },
   });
   const [apiValidated, setApiValidated] = useState(false);
 
-  const onCreateSite = async ({ name, url, apiKey, apiUrl }) => {
+  const onUpdateSite = async ({
+    siteId,
+    name,
+    url,
+    apiUrl,
+    apiKey,
+    previewRatio,
+  }) => {
     const uid = auth.user.uid;
     const token = auth.user.token;
-    const newSite = {
+    const newSiteData = {
       authorId: uid,
-      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       name,
       url,
-      apiKey,
       apiUrl,
+      apiKey,
       previewRatio: parseFloat(previewRatio),
     };
 
-    let siteId = null;
     try {
-      ({ id: siteId } = await db.createSite(newSite));
-
       mutate(
         ['/api/auth/sites', token],
         async (data) => {
-          const newData = {
-            sites: [{ id: siteId, ...newSite }, ...data.sites],
-            //See "Mutate Based on Current Data" https://swr.vercel.app/docs/mutation
-          };
-          return newData;
+          const newSites = data.sites.map((site) => {
+            if (site.id !== siteId) return site;
+            const updated = { ...site, ...newSiteData };
+            return updated;
+          });
+          return { sites: newSites };
         },
         false
       );
 
+      await db.updateSite(siteId, newSiteData);
+
       toast({
         title: 'Success! 🎉',
-        description: "We've added your site.",
+        description: "We've updated your site.",
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -78,35 +96,13 @@ const AddSiteModal = ({ children }) => {
     } catch (err) {
       toast({
         title: 'Failed! 😢',
-        description: `We were not able to add you site, due to ${err.name}: ${err.message}`,
+        description: `We were not able to update the site ${siteId}, due to ${err.name}: ${err.message}`,
         status: 'error',
-        duration: 9000,
+        duration: 15000,
         isClosable: true,
       });
-    }
-
-    try {
-      const resp = await axios.get(`/api/auth/ghostwebhooks?siteId=${siteId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log(resp);
-
-      toast({
-        title: 'Success! 🎉',
-        description:
-          "We've added webhooks to sync your post updates with preview.",
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (err) {
-      toast({
-        title: 'Warning 😢',
-        description: `We were not able to add webhooks. But your preview should still work, it's just slower.\n (${err.name}: ${err.message}.)`,
-        status: 'warning',
-        duration: 9000,
-        isClosable: true,
-      });
+    } finally {
+      mutate(['/api/auth/sites', token]); // trigger revalidation
     }
   };
 
@@ -137,35 +133,31 @@ const AddSiteModal = ({ children }) => {
 
   return (
     <>
-      <Button
-        id='add-site-modal-button'
-        onClick={() => {
-          setApiValidated(false);
-          onOpen();
-        }}
-        backgroundColor='gray.900'
-        color='white'
-        fontWeight='medium'
-        _hover={{ bg: 'gray.700' }}
-        _active={{
-          bg: 'gray.800',
-          transform: 'scale(0.95)',
-        }}
-      >
-        {children}
-      </Button>
+      <Box color='gray.600'>
+        <Link
+          id='edit-site-modal-button'
+          onClick={() => {
+            setApiValidated(false);
+            onOpen();
+          }}
+        >
+          <FaEdit />
+        </Link>
+      </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent
-          as='form'
-          onSubmit={handleSubmit((formData) => {
-            onCreateSite(formData);
-            onClose();
-          })}
-        >
-          <ModalHeader fontWeight='bold'>Add Site</ModalHeader>
+        <ModalContent as='form'>
+          <ModalHeader fontWeight='bold'>Edit Site Settings</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
+            <FormControl isDisabled>
+              <FormLabel>Site Id</FormLabel>
+              <Input
+                id='site-id'
+                name='id'
+                ref={register({ required: true })}
+              />
+            </FormControl>
             <FormControl isInvalid={errors.name}>
               <FormLabel>Name</FormLabel>
               <Input
@@ -335,8 +327,12 @@ const AddSiteModal = ({ children }) => {
                 color='#194D4C'
                 fontWeight='medium'
                 type='submit'
+                onClick={handleSubmit((formData) => {
+                  onUpdateSite({ ...formData, siteId: site.id });
+                  onClose();
+                })}
               >
-                Create
+                Update
               </Button>
             </HStack>
           </ModalFooter>
@@ -346,4 +342,4 @@ const AddSiteModal = ({ children }) => {
   );
 };
 
-export default AddSiteModal;
+export default EditSiteModal;

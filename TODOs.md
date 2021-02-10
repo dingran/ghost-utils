@@ -1,11 +1,18 @@
 - [x] add add new site button to dashboard
 - [x] set up firestore access rule for webhook creation
 - [x] add the webhook creation into somewhere in the site registration flow
-- [ ] adjust site table to show read only content (stats etc)
+- [x] adjust site table to show read only content (stats etc)
+- [ ] show some stats/analytics for each site?
 - [ ] add site details view, as a modal
 - [ ] add site edit flow, through a modal
 - [ ] add ways to create webhook later
+- [ ] set up logflare for vercel
+- [ ] learn about next-seo
 - [ ] test out post.unpublished and post.published event handling
+- [ ] log a list of blog topics
+
+Optional
+
 - [ ] try and fix the following fireabase auth error
 
 ```

@@ -1,13 +1,28 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import { mutate } from 'swr';
+import * as db from '@/lib/db';
+import { useAuth } from '@/lib/auth';
 import NextLink from 'next/link';
 import { parseISO, format } from 'date-fns';
 import ReactJson from 'react-json-view';
 import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useToast,
+  useDisclosure,
+  HStack,
   Box,
   Button,
   Link,
   Skeleton,
   SkeletonText,
+  Text,
   Thead,
   Tbody,
   Table,
@@ -15,9 +30,16 @@ import {
   Th,
   Td,
   Icon,
+  Input,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
 } from '@chakra-ui/react';
 import { FaEdit } from 'react-icons/fa';
 import { IoInformationCircleOutline } from 'react-icons/io5';
+
+import EditSiteModal from '@/components/EditSiteModal';
 
 // import DeleteSiteButton from './DeleteSiteButton';
 
@@ -49,23 +71,11 @@ const TableSkeleton = () => (
   </Tbody>
 );
 
-function EditSiteButton({ siteId }) {
-  const clickHandler = () => {
-    console.log(siteId);
-  };
-  return (
-    <Box color='gray.600'>
-      <Link onClick={clickHandler}>
-        <FaEdit />
-      </Link>
-    </Box>
-  );
-}
-
 const TableContent = ({ sites, setSelectedSiteId }) => {
   const onClickHandler = (siteId) => {
     setSelectedSiteId(siteId);
   };
+  const defaultPreviewRatio = <Text color='gray.300'>0.4 (default)</Text>;
   return (
     <Tbody>
       {sites.map((site, index) => {
@@ -74,8 +84,8 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
           site.apiKey.length > nchar
             ? `${site.apiKey.slice(0, nchar)}**`
             : site.apiKey;
-        // const siteIdStr =
-        //   site.id.length > nchar ? `${site.id.slice(0, nchar)}**` : site.id;
+        const siteIdStr =
+          site.id.length > nchar ? `${site.id.slice(0, nchar)}**` : site.id;
 
         return (
           <Box as='tr' key={site.id}>
@@ -91,17 +101,21 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
               </Link>
             </Td>
 
-            <Td>{site.id}</Td>
+            <Td>{siteIdStr}</Td>
             <Td>
               <Link href={site.url} isExternal>
                 {site.url}
               </Link>
             </Td>
+            <Td isNumeric>{site.previewRatio || defaultPreviewRatio}</Td>
             {/* <Td>{`${site.apiUrl} | ${apiKeyStr}`}</Td> */}
-            <Td>{format(parseISO(site.createdAt), 'PPpp')}</Td>
+            <Td>{format(parseISO(site.updatedAt || site.createdAt), 'Pp')}</Td>
 
             <Td>
-              <EditSiteButton siteId={site.id} />
+              <HStack>
+                <EditSiteModal site={site} />
+                {/* <DeleteSiteModal site={site} /> */}
+              </HStack>
             </Td>
           </Box>
         );
@@ -120,8 +134,9 @@ const SiteTable = ({ sites, setSelectedSiteId }) => {
             <Th>Name </Th>
             <Th>Id </Th>
             <Th>Site Link</Th>
+            <Th>Preview Ratio</Th>
             {/* <Th>Ghost API Url and Key</Th> */}
-            <Th>Date Added</Th>
+            <Th>Date Updated</Th>
             <Th>Edit</Th>
           </Tr>
         </Thead>

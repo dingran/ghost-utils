@@ -15,6 +15,7 @@ const fetcher = async (url, token) => {
     error.info = await res.json();
     error.status = res.status;
     throw error;
+    // throw error would cause useSWR to retry, and it seems to fix the issue of firebase expired token
   }
 
   return res.json();
