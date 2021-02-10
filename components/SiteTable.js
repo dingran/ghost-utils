@@ -38,8 +38,8 @@ import {
 } from '@chakra-ui/react';
 import { FaEdit } from 'react-icons/fa';
 import { IoInformationCircleOutline } from 'react-icons/io5';
-
 import EditSiteModal from '@/components/EditSiteModal';
+import DeleteSiteModal from '@/components/DeleteSiteModal';
 
 // import DeleteSiteButton from './DeleteSiteButton';
 
@@ -112,9 +112,9 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
             <Td>{format(parseISO(site.updatedAt || site.createdAt), 'Pp')}</Td>
 
             <Td>
-              <HStack>
+              <HStack spacing={4}>
                 <EditSiteModal site={site} />
-                {/* <DeleteSiteModal site={site} /> */}
+                <DeleteSiteModal siteId={site.id}>Delete</DeleteSiteModal>
               </HStack>
             </Td>
           </Box>
@@ -137,7 +137,7 @@ const SiteTable = ({ sites, setSelectedSiteId }) => {
             <Th>Preview Ratio</Th>
             {/* <Th>Ghost API Url and Key</Th> */}
             <Th>Date Updated</Th>
-            <Th>Edit</Th>
+            <Th></Th>
           </Tr>
         </Thead>
         {/* <TableSkeleton></TableSkeleton> */}
