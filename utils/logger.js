@@ -10,6 +10,7 @@ const logger = pino(
   {
     browser: {
       transmit: {
+        level: 'info',
         send: send,
       },
     },
