@@ -75,7 +75,6 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
   const onClickHandler = (siteId) => {
     setSelectedSiteId(siteId);
   };
-  const defaultPreviewRatio = <Text color='gray.300'>0.4 (default)</Text>;
   return (
     <Tbody>
       {sites.map((site, index) => {
@@ -84,8 +83,8 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
           site.apiKey.length > nchar
             ? `${site.apiKey.slice(0, nchar)}**`
             : site.apiKey;
-        const siteIdStr =
-          site.id.length > nchar ? `${site.id.slice(0, nchar)}**` : site.id;
+        const siteIdStr = site.id;
+        // site.id.length > nchar ? `${site.id.slice(0, nchar)}**` : site.id;
 
         return (
           <Box as='tr' key={site.id}>
@@ -107,7 +106,6 @@ const TableContent = ({ sites, setSelectedSiteId }) => {
                 {site.url}
               </Link>
             </Td>
-            <Td isNumeric>{site.previewRatio || defaultPreviewRatio}</Td>
             {/* <Td>{`${site.apiUrl} | ${apiKeyStr}`}</Td> */}
             <Td>{format(parseISO(site.updatedAt || site.createdAt), 'Pp')}</Td>
 
@@ -134,7 +132,6 @@ const SiteTable = ({ sites, setSelectedSiteId }) => {
             <Th>Name </Th>
             <Th>Id </Th>
             <Th>Site Link</Th>
-            <Th>Preview Ratio</Th>
             {/* <Th>Ghost API Url and Key</Th> */}
             <Th>Date Updated</Th>
             <Th></Th>

@@ -1,6 +1,7 @@
 Next up
 
 - [ ] set up logflare for vercel
+- [ ] My sites page should have a good empty state
 - [ ] establish the pattern of axios call inside of db.js from client side
 
 Backlog
@@ -15,6 +16,7 @@ Backlog
 
 Done
 
+- [x] site tabel shouldn't display preview ratio or any other settings
 - [x] in deletion flow need to delete Ghost webhook
 - [x] edit modal's default value need to be reset after update
 - [x] refactor add site vs edit site modal, too much repeated logic
@@ -29,7 +31,7 @@ Done
 
 Optional
 
-- [ ] try and fix the following fireabase auth error
+- [-] try and fix the following fireabase auth error
 
 ```
 FirebaseAuthError: Firebase ID token has expired. Get a fresh ID token from your client app and try again (auth/id-token-expired). See https://firebase.google.com/docs/auth/admin/verify-id-tokens for details on how to retrieve an ID token.
