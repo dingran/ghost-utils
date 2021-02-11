@@ -7,12 +7,12 @@ const handler = async (req, res) => {
     try {
       const { siteId } = req.query;
       const { site } = await dbAdmin.getSite(siteId);
-      throw new Error('error for testing logflare');
+
+      logError(req, res, 'test123 logflare'); //test
 
       return res.status(200).json({ site });
     } catch (error) {
       res.status(500);
-      logError(req, res, error);
       return res.json({ error: error.message });
     }
   }

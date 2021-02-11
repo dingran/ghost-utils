@@ -33,7 +33,7 @@ const formatObjectKeys = (headers) => {
   return keyValues;
 };
 
-function logError(req, res, error) {
+function logError(req, res, msg) {
   logger.error(
     {
       request: {
@@ -45,7 +45,8 @@ function logError(req, res, error) {
         statusCode: res.statusCode,
       },
     },
-    error.message
+    msg
+    // error.message
   );
 }
 
