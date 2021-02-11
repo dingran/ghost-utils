@@ -1,5 +1,6 @@
 const GhostAdminAPI = require('@tryghost/admin-api');
 const truncate = require('truncate-html');
+import { logger, logError } from '@/utils/logger';
 const TRUNCATION_LENGTH = 500;
 
 const api = new GhostAdminAPI({
@@ -18,7 +19,8 @@ export default async (req, res) => {
       res.statusCode = 200;
       res.json({ response });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      logError(req, res, error.message);
       res.statusCode = 500;
       res.json({ error });
     }
