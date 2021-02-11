@@ -1,8 +1,7 @@
 Next up
 
-- [ ] edit modal's default value need to be reset after update
-- [ ] in deletion flow need to delete Ghost webhook
 - [ ] set up logflare for vercel
+- [ ] establish the pattern of axios call inside of db.js from client side
 
 Backlog
 
@@ -16,6 +15,8 @@ Backlog
 
 Done
 
+- [x] in deletion flow need to delete Ghost webhook
+- [x] edit modal's default value need to be reset after update
 - [x] refactor add site vs edit site modal, too much repeated logic
 - [x] undo the refactor; we need to restrict what people can edit
 - [x] edit site modal used the write mutation flow, need to change add site modal to match that

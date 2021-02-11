@@ -37,7 +37,7 @@ const DashboardHeader = () => (
   <Box>
     <Flex justifyContent='space-between'>
       <Heading mb={8}>My Sites</Heading>
-      <AddSiteModal>+ Add Site</AddSiteModal>
+      <AddSiteModal>Add Site</AddSiteModal>
     </Flex>
   </Box>
 );

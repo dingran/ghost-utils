@@ -26,7 +26,7 @@ import {
 import * as db from '@/lib/db';
 import { useAuth } from '@/lib/auth';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { startsWithHttp, validUrl, reachUrl } from '@/utils/urltest';
 import { FaEdit } from 'react-icons/fa';
 import useSWR from 'swr';
@@ -45,6 +45,12 @@ const EditSiteModal = ({ site: siteToEdit }) => {
       previewRatio: siteToEdit.previewRatio || 0.4,
     },
   });
+
+  // useEffect(() => {
+  //   db.getSite(siteToEdit.id).then((data) => {
+  //     reset(data);
+  //   });
+  // }, [isOpen]); // calls on every Open of the modal
 
   const onUpdateSite = async ({ name, previewRatio }) => {
     const token = auth.user.token;
@@ -69,6 +75,8 @@ const EditSiteModal = ({ site: siteToEdit }) => {
       );
 
       await db.updateSite(siteToEdit.id, newSiteData);
+
+      reset(newSiteData);
 
       toast({
         title: 'Success! 🎉',

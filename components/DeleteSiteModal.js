@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import { mutate } from 'swr';
 import {
   AlertDialog,
@@ -37,7 +38,8 @@ const DeleteSiteModal = ({ siteId }) => {
         false
       );
 
-      await deleteSite(siteId);
+      const resp = await deleteSite(siteId, auth.user.token);
+      console.log(resp.data);
 
       toast({
         title: 'Success! 🎉',
