@@ -1,15 +1,11 @@
 import { withAuth } from '@/lib/middlewares';
 import * as dbAdmin from '@/lib/db-admin';
-import { logger, logError } from '@/utils/logger';
 
 const handler = async (req, res) => {
   if (req.method === 'GET') {
     try {
       const { siteId } = req.query;
       const { site } = await dbAdmin.getSite(siteId);
-
-      logError(req, res, 'test123 logflare'); //test
-
       return res.status(200).json({ site });
     } catch (error) {
       res.status(500);
