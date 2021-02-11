@@ -1,7 +1,7 @@
 Next up
 
-- [ ] edit site modal used the write mutation flow, need to change add site modal to match that
-- [ ] refactor add site vs edit site modal, too much repeated logic
+- [ ] edit modal's default value need to be reset after update
+- [ ] in deletion flow need to delete Ghost webhook
 - [ ] set up logflare for vercel
 
 Backlog
@@ -16,6 +16,9 @@ Backlog
 
 Done
 
+- [x] refactor add site vs edit site modal, too much repeated logic
+- [x] undo the refactor; we need to restrict what people can edit
+- [x] edit site modal used the write mutation flow, need to change add site modal to match that
 - [x] add add new site button to dashboard
 - [x] set up firestore access rule for webhook creation
 - [x] add the webhook creation into somewhere in the site registration flow

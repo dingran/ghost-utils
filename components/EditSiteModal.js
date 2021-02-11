@@ -32,41 +32,25 @@ import { FaEdit } from 'react-icons/fa';
 import useSWR from 'swr';
 import fetcher from '@/utils/fetcher';
 
-const EditSiteModal = ({ site }) => {
+const EditSiteModal = ({ site: siteToEdit }) => {
   const toast = useToast();
   const auth = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { handleSubmit, register, errors, getValues } = useForm({
+  const { handleSubmit, register, errors, getValues, reset } = useForm({
     mode: 'onTouched',
     defaultValues: {
-      id: site.id,
-      name: site.name,
-      url: site.url,
-      apiUrl: site.apiUrl,
-      apiKey: site.apiKey,
-      previewRatio: site.previewRatio || 0.4,
+      id: siteToEdit.id,
+      name: siteToEdit.name,
+      previewRatio: siteToEdit.previewRatio || 0.4,
     },
   });
-  const [apiValidated, setApiValidated] = useState(false);
 
-  const onUpdateSite = async ({
-    siteId,
-    name,
-    url,
-    apiUrl,
-    apiKey,
-    previewRatio,
-  }) => {
-    const uid = auth.user.uid;
+  const onUpdateSite = async ({ name, previewRatio }) => {
     const token = auth.user.token;
     const newSiteData = {
-      authorId: uid,
       updatedAt: new Date().toISOString(),
       name,
-      url,
-      apiUrl,
-      apiKey,
       previewRatio: parseFloat(previewRatio),
     };
 
@@ -75,7 +59,7 @@ const EditSiteModal = ({ site }) => {
         ['/api/auth/sites', token],
         async (data) => {
           const newSites = data.sites.map((site) => {
-            if (site.id !== siteId) return site;
+            if (site.id !== siteToEdit.id) return site;
             const updated = { ...site, ...newSiteData };
             return updated;
           });
@@ -84,7 +68,7 @@ const EditSiteModal = ({ site }) => {
         false
       );
 
-      await db.updateSite(siteId, newSiteData);
+      await db.updateSite(siteToEdit.id, newSiteData);
 
       toast({
         title: 'Success! 🎉',
@@ -96,7 +80,7 @@ const EditSiteModal = ({ site }) => {
     } catch (err) {
       toast({
         title: 'Failed! 😢',
-        description: `We were not able to update the site ${siteId}, due to ${err.name}: ${err.message}`,
+        description: `We were not able to update the site ${siteToEdit.id}, due to ${err.name}: ${err.message}`,
         status: 'error',
         duration: 15000,
         isClosable: true,
@@ -106,38 +90,12 @@ const EditSiteModal = ({ site }) => {
     }
   };
 
-  const validateApiKey = async (apiKey) => {
-    console.log('validating apikey');
-    const apiUrl = getValues('apiUrl');
-    console.log(apiUrl, apiKey);
-    if (apiUrl && apiKey) {
-      const res = await fetch(
-        `/api/ghostApiTest?apiUrl=${apiUrl}&apiKey=${apiKey}`,
-        {
-          method: 'GET',
-        }
-      );
-      console.log(res.status);
-      if (res.status !== 200) {
-        setApiValidated(false);
-        return false;
-      }
-
-      setApiValidated(true);
-      return true;
-    }
-
-    setApiValidated(false);
-    return false;
-  };
-
   return (
     <>
       <Box color='gray.600'>
         <Link
           id='edit-site-modal-button'
           onClick={() => {
-            setApiValidated(false);
             onOpen();
           }}
         >
@@ -169,128 +127,6 @@ const EditSiteModal = ({ site }) => {
               {errors.name && (
                 <FormErrorMessage>{'Name is required'}</FormErrorMessage>
               )}
-            </FormControl>
-            <FormControl mt={4} isInvalid={errors.url}>
-              <FormLabel>Website Url</FormLabel>
-              <Input
-                id='link-input'
-                placeholder='https://example.com'
-                name='url'
-                ref={register({
-                  required: true,
-                  validate: {
-                    validUrl,
-                    startsWithHttp,
-                    // reachUrl,
-                  },
-                })}
-              />
-              {errors.url?.type === 'required' && (
-                <FormErrorMessage>{'Website Url is required'}</FormErrorMessage>
-              )}
-              {errors.url?.type === 'startsWithHttp' && (
-                <FormErrorMessage>
-                  {'Remember to add https:// or http://'}
-                </FormErrorMessage>
-              )}
-              {errors.url?.type === 'validUrl' && (
-                <FormErrorMessage>
-                  {'The provided is not a valid url'}
-                </FormErrorMessage>
-              )}
-              {errors.url?.type === 'reachUrl' && (
-                <FormErrorMessage>
-                  {'The provide url is not reachable.'}
-                </FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl mt={4} isInvalid={errors.apiUrl}>
-              <FormLabel>Ghost API Url</FormLabel>
-              <Input
-                id='api-url-input'
-                placeholder='https://example.ghost.io'
-                name='apiUrl'
-                ref={register({
-                  required: true,
-                  validate: {
-                    validUrl,
-                    startsWithHttp,
-                    // reachUrl,
-                  },
-                })}
-              />
-
-              {errors.apiUrl?.type === 'required' && (
-                <FormErrorMessage>
-                  {'Ghost API Url is required'}
-                </FormErrorMessage>
-              )}
-              {errors.apiUrl?.type === 'startsWithHttp' && (
-                <FormErrorMessage>
-                  {'Remember to add https:// or http://'}
-                </FormErrorMessage>
-              )}
-              {errors.apiUrl?.type === 'validUrl' && (
-                <FormErrorMessage>
-                  {'The provided is not a valid url'}
-                </FormErrorMessage>
-              )}
-              {errors.apiUrl?.type === 'reachUrl' && (
-                <FormErrorMessage>
-                  {'The provide url is not reachable.'}
-                </FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl mt={4} isInvalid={errors.apiKey}>
-              <FormLabel>Ghost Admin API Key</FormLabel>
-              <Input
-                id='api-input'
-                placeholder=''
-                name='apiKey'
-                ref={register({
-                  required: true,
-                  validate: {
-                    length89: (str) => str.length === 89,
-                    format: (str) => {
-                      const parts = str.split(':');
-                      if (parts.length !== 2) return false;
-                      if (parts[0].length !== 24 || parts[1].length !== 64)
-                        return false;
-                      return true;
-                    },
-                    validateApiKey,
-                  },
-                })}
-              />
-              {errors.apiKey?.type === 'required' && (
-                <FormErrorMessage>
-                  {'Ghost Admin API Key is required'}
-                </FormErrorMessage>
-              )}
-              {errors.apiKey?.type === 'length89' && (
-                <FormErrorMessage>
-                  {'Ghost Admin API Key should have 89 characters'}
-                </FormErrorMessage>
-              )}
-              {errors.apiKey?.type === 'format' && (
-                <FormErrorMessage>
-                  {
-                    'Ghost Admin API Key should have have the following format {A}:{B}, where A is 24 hex characters and B is 64 hex characters'
-                  }
-                </FormErrorMessage>
-              )}
-              {errors.apiKey?.type === 'validateApiKey' && (
-                <FormErrorMessage>
-                  {
-                    'Ghost API test call failed, please double check API Key and Url and try again'
-                  }
-                </FormErrorMessage>
-              )}
-              {!errors.apiKey && apiValidated ? (
-                <FormHelperText color='green'>
-                  Ghost Admin API key and url works! 🎉{' '}
-                </FormHelperText>
-              ) : null}
             </FormControl>
 
             <FormControl isInvalid={errors.previewRatio}>
@@ -328,7 +164,7 @@ const EditSiteModal = ({ site }) => {
                 fontWeight='medium'
                 type='submit'
                 onClick={handleSubmit((formData) => {
-                  onUpdateSite({ ...formData, siteId: site.id });
+                  onUpdateSite(formData);
                   onClose();
                 })}
               >
