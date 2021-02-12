@@ -10,8 +10,7 @@ export default async (req, res) => {
   if (!siteId) {
     const error = 'Please inlcude siteId in query param';
     console.log(error);
-    res.status(400).json({ error });
-    return;
+    return res.status(400).json({ error });
   }
 
   const slug = req?.body?.post?.current?.slug;
@@ -19,8 +18,7 @@ export default async (req, res) => {
   if (!slug || !currentHtml) {
     const error = 'Bad request body, did not contain slug or html';
     console.log(error);
-    res.status(400).json({ error });
-    return;
+    return res.status(400).json({ error });
   }
 
   const data = {
@@ -52,5 +50,5 @@ export default async (req, res) => {
     console.log(error);
   }
 
-  res.status(200).end();
+  return res.status(200).end();
 };

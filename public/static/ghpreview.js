@@ -1,4 +1,8 @@
 (function () {
+  var ctaElement = document.querySelector('aside[class*="upgrade-cta"]'); //TODO: allow custom selector
+  if (!ctaElement) {
+    return;
+  }
   var ghpreviewScript = document.currentScript;
   var siteId = ghpreviewScript.getAttribute('data-site');
 
@@ -52,8 +56,8 @@
       const div = document.createElement('div');
       div.innerHTML = data.response.html;
       div.className = 'ghpreview-membersonly-excerpt';
-      document
-        .querySelector('aside[class*="upgrade-cta"]') //TODO: allow custom selector
-        .parentNode.prepend(div);
+      if (ctaElement) {
+        ctaElement.parentNode.prepend(div);
+      }
     });
 })();
