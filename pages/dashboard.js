@@ -126,7 +126,7 @@ const DashboardPage = () => {
             pagePath='dashboard'
           ></NextBreadcrumb>
 
-          {data.sites.length ? (
+          {data?.sites.length ? (
             <>
               <DashboardHeader></DashboardHeader>
               <SiteTable

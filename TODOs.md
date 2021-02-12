@@ -1,8 +1,7 @@
 Next up
 
-- [ ] My sites page should have a good empty state
 - [ ] have a correct account page
-- [ ] can I use it as Google Analytics (disable console logging only send to log drain)
+- [ ] can I use logflare as Google Analytics (disable console logging only send to log drain)
 - [ ] establish the pattern of axios call inside of db.js from client side
 
 Backlog
@@ -17,6 +16,7 @@ Backlog
 
 Done
 
+- [x] My sites page should have a good empty state
 - [x] set up logflare for vercel
 - [x] look into https://github.com/pinojs/pino/blob/master/docs/browser.md; and pino pretty
 - [x] site tabel shouldn't display preview ratio or any other settings
