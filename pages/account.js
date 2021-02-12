@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { logger } from '@/utils/logger';
+import { pinoLogger } from '@/utils/logger';
 import {
   Avatar,
   Heading,
@@ -84,7 +84,7 @@ const Account = () => {
     Router.push('/');
   }
 
-  logger.info('pino logger from browser');
+  pinoLogger.info('pino logger from browser');
 
   return (
     <>

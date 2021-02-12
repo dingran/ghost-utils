@@ -20,9 +20,6 @@ export default async (req, res) => {
       res.statusCode = 200;
       res.json({ response });
     } catch (error) {
-      // logger.error({ error: 'error' });
-      // logger.error({ a: 'b' });
-
       res.statusCode = 500;
       logError(req, res, error);
       res.json({ error });
