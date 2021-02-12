@@ -31,6 +31,7 @@ const Hero = () => {
             display='inline'
             bgGradient='linear(60deg,#f79533,#f37055,#ef4e7b,#a166ab,#5073b8,#1098ad,#07b39b,#6fba82)'
             bgClip='text'
+            sx={{ '-webkit-box-decoration-break': 'clone' }}
           >
             content preview
           </Heading>
