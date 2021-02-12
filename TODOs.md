@@ -1,9 +1,8 @@
 Next up
 
-- [ ] look into https://github.com/pinojs/pino/blob/master/docs/browser.md;
-- [ ] can I use it as Google Analytics (disable console logging only send to log drain)
-- [ ] set up logflare for vercel
 - [ ] My sites page should have a good empty state
+- [ ] have a correct account page
+- [ ] can I use it as Google Analytics (disable console logging only send to log drain)
 - [ ] establish the pattern of axios call inside of db.js from client side
 
 Backlog
@@ -18,6 +17,8 @@ Backlog
 
 Done
 
+- [x] set up logflare for vercel
+- [x] look into https://github.com/pinojs/pino/blob/master/docs/browser.md; and pino pretty
 - [x] site tabel shouldn't display preview ratio or any other settings
 - [x] in deletion flow need to delete Ghost webhook
 - [x] edit modal's default value need to be reset after update

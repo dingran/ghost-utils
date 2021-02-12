@@ -42,6 +42,26 @@ const DashboardHeader = () => (
   </Box>
 );
 
+const EmptyState = () => {
+  return (
+    <Flex
+      width='100%'
+      bgColor='gray.50'
+      borderRadius='8px'
+      p={16}
+      justify='center'
+      align='center'
+      direction='column'
+    >
+      <Heading size='lg' mb={2}>
+        You haven’t added any sites.
+      </Heading>
+      <Text mb={4}>Let’s get started.</Text>
+      <AddSiteModal>Add Your First Site</AddSiteModal>
+    </Flex>
+  );
+};
+
 const SiteDetails = ({ site }) => {
   return (
     <Box>
@@ -106,13 +126,19 @@ const DashboardPage = () => {
             pagePath='dashboard'
           ></NextBreadcrumb>
 
-          <DashboardHeader></DashboardHeader>
-          <SiteTable
-            sites={data?.sites}
-            setSelectedSiteId={setSelectedSiteId}
-          />
-          <Box>{selectedSiteId}</Box>
-          <SiteDetails site={siteData}></SiteDetails>
+          {data.sites.length ? (
+            <>
+              <DashboardHeader></DashboardHeader>
+              <SiteTable
+                sites={data?.sites}
+                setSelectedSiteId={setSelectedSiteId}
+              />
+              <Box>{selectedSiteId}</Box>
+              <SiteDetails site={siteData}></SiteDetails>
+            </>
+          ) : (
+            <EmptyState />
+          )}
         </PageShell>
       ) : null}
     </>
