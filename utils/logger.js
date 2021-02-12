@@ -6,22 +6,27 @@ const { stream, send } = logflarePinoVercel({
   sourceToken: process.env.NEXT_PUBLIC_LOGFLARE_STREAM,
 });
 
-const logger = pino(
-  {
-    browser: {
-      transmit: {
-        level: 'info',
-        send: send,
-      },
-    },
-    level: 'debug',
-    base: {
-      env: process.env.NODE_ENV || 'ENV not set',
-      revision: process.env.VERCEL_GITHUB_COMMIT_SHA,
+const config = {
+  browser: {
+    transmit: {
+      level: 'info',
+      send: send,
     },
   },
-  stream
-);
+  level: 'debug',
+  base: {
+    env: process.env.NODE_ENV || 'ENV not set',
+    revision: process.env.VERCEL_GITHUB_COMMIT_SHA,
+  },
+};
+
+let pinoLogger;
+if (process.env.NODE_ENV === 'production') {
+  pinoLogger = pino(config, stream);
+} else {
+  config.prettyPrint = true;
+  pinoLogger = pino(config);
+}
 
 const formatObjectKeys = (headers) => {
   const keyValues = {};
@@ -34,21 +39,21 @@ const formatObjectKeys = (headers) => {
   return keyValues;
 };
 
-function logError(req, res, msg) {
-  logger.error(
+function logError(req, res, errorObj, msg) {
+  pinoLogger.error(
     {
+      errorObj,
       request: {
-        headers: formatObjectKeys(req.headers),
         url: req.url,
         method: req.method,
+        headers: formatObjectKeys(req.headers),
       },
       response: {
         statusCode: res.statusCode,
       },
     },
     msg
-    // error.message
   );
 }
 
-export { logger, logError, formatObjectKeys };
+export { pinoLogger, logError, formatObjectKeys };

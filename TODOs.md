@@ -1,5 +1,7 @@
 Next up
 
+- [ ] look into https://github.com/pinojs/pino/blob/master/docs/browser.md;
+- [ ] can I use it as Google Analytics (disable console logging only send to log drain)
 - [ ] set up logflare for vercel
 - [ ] My sites page should have a good empty state
 - [ ] establish the pattern of axios call inside of db.js from client side
