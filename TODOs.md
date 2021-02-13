@@ -1,22 +1,15 @@
 Next up
 
+- [ ] need to put auth in front of post2md route
+- [ ] set up seo, at leset the link card should work in my blog, maybe use next-seo
 - [ ] design stats collection to power billing
 - [ ] have a correct account page
 - [ ] can I use logflare as Google Analytics (disable console logging only send to log drain)
 - [ ] establish the pattern of axios call inside of db.js from client side
 
-Backlog
-
-- [ ] show some stats/analytics for each site?
-- [ ] add site details view, as a modal?
-- [ ] display webhook status somewhere
-- [ ] add ways to create webhook later
-- [ ] learn about next-seo
-- [ ] test out post.unpublished and post.published event handling
-- [ ] log a list of blog topics
-
 Done
 
+- [x] html to markdown converstion utils
 - [x] My sites page should have a good empty state
 - [x] set up logflare for vercel
 - [x] look into https://github.com/pinojs/pino/blob/master/docs/browser.md; and pino pretty
@@ -33,9 +26,18 @@ Done
 - [x] add delete site button and logic
 - [x] add site edit flow, through a modal
 
+Backlog
+
+- [ ] show some stats/analytics for each site?
+- [ ] add site details view, as a modal?
+- [ ] display webhook status somewhere
+- [ ] add ways to create webhook later
+- [ ] test out post.unpublished and post.published event handling
+- [ ] log a list of blog topics
+
 Optional
 
-- [-] try and fix the following fireabase auth error
+- [ ] try and fix the following fireabase auth error
 
 ```
 FirebaseAuthError: Firebase ID token has expired. Get a fresh ID token from your client app and try again (auth/id-token-expired). See https://firebase.google.com/docs/auth/admin/verify-id-tokens for details on how to retrieve an ID token.
