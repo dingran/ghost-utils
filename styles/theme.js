@@ -10,6 +10,32 @@ const theme = extendTheme({
         color: 'blue.500',
         textDecor: 'underline',
       },
+      fonts: {
+        heading: 'Georgia, serif',
+        mono: 'Menlo, monospace',
+      },
+      'h1, h2, h3, h4, h5, h6': {
+        mt: '1.5em',
+        mb: '0.8em',
+      },
+      'ol, ul': {
+        pl: '1.0em',
+        pr: '1.0em',
+        listStylePosition: 'inside',
+      },
+      'p, ul, ol, dl, blockquote': {
+        mt: '1.0em',
+        mb: '1.0em',
+      },
+      blockquote: {
+        px: '1.0em',
+        borderLeftColor: 'blue.200',
+        borderLeftWidth: '3px',
+        textColor: 'gray.400',
+      },
+      svg: {
+        display: 'inline',
+      },
     },
   },
   fonts: {

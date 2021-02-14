@@ -1,5 +1,7 @@
 import PageShell from '@/components/PageShell';
+import LoginButtons from '@/components/LoginButtons';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
+import { HStack } from '@chakra-ui/react';
 
 export default (props) => <PageShell {...props} />;
 
@@ -7,13 +9,38 @@ export default (props) => <PageShell {...props} />;
 
 # FAQ
 
-## How does it work?
+## How to set it up?
 
-blah blah
+It's very simple:
 
-here is another paragraph
+1. You provided your **Ghost Admin API and URL**, so that Ghost Preview can access your content
+2. You put **one line code injection** in your Ghost site, it looks like this `<script src="https://ghutils.dingran.me/static/ghpreview.js" data-site="SITE-ID" defer></script>`
 
-## What are the limitations?
+<HStack>
+  <div> That's it! Get started now 👉 </div>
+  <LoginButtons />
+</HStack>
+
+You can read detailed setup instructions [here](todo)
+
+## How does it work behind the scene?
+
+Also very simple:
+
+1. We use the Ghost Admin API to access your posts that are not publicly visible (i.e. paid and member-only posts), and create preview (a trucated version of it) for each of them.
+2. The code injection you added to your site allows the browser to retrieve these previews and intert them into the right place for the readers to view.
+
+You can control how much preview to offer, in terms of length percentage, the defeault is 40%.
+
+## Supported themes
+
+This tool might not work with all custom themes. The following themes are verified to work:
+
+1. Casper
+2. Lyra
+3. (more to come)
+
+Feel free to reach out if the tool doesn't work for your theme and I'll add support for it.
 
 ## How to get help?
 
@@ -31,4 +58,4 @@ here is another paragraph
 
 ## Why is it free?
 
-blah blah
+It was simple to build and free to host, so it's free for fair use.
