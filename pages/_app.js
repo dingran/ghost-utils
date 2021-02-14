@@ -31,10 +31,10 @@ const SEO = {
     description,
     images: [
       {
-        url: ' https://7b568dcbe8b6.ngrok.io/og.jpg',
+        url: 'https://ghutils.dingran.me/og.jpg',
         alt: title,
-        width: 594,
-        height: 264,
+        width: 523,
+        height: 274,
       },
     ],
   },
