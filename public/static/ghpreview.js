@@ -1,23 +1,16 @@
 (function () {
   var ctaElement = document.querySelector('aside[class*="upgrade-cta"]'); //TODO: allow custom selector
   if (!ctaElement) {
+    console.log('[ghpreview]', 'Not able to find CTA element');
     return;
   }
+  console.log('[ghpreview]', 'Found CTA element');
   var ghpreviewScript = document.currentScript;
   var siteId = ghpreviewScript.getAttribute('data-site');
 
   // strip trailing slash then split by slash
   var pathArray = window.location.pathname.replace(/\/$/, '').split('/');
   var slug = pathArray[pathArray.length - 1];
-
-  if (
-    slug === '' ||
-    slug === 'signup' ||
-    slug === 'signin' ||
-    slug === 'membership'
-  ) {
-    return;
-  }
 
   var url = new URL(ghpreviewScript.src);
   var domainUrl = ghpreviewScript.src.replace(url.pathname, '');
