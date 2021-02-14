@@ -66,9 +66,9 @@ const SettingsTable = ({ stripeRole, children }) => (
         >
           Settings
         </Text>
-        <Badge h='1rem' variantColor='blue'>
+        {/* <Badge h='1rem' variantColor='blue'>
           {stripeRole}
-        </Badge>
+        </Badge> */}
       </Flex>
     </Flex>
     <Flex direction='column' p={6}>
@@ -111,17 +111,17 @@ const Account = () => {
               <Text>{user?.email}</Text>
             </Flex>
             <SettingsTable stripeRole={user?.stripeRole}>
-              <FeedbackUsage />
+              {/* <FeedbackUsage /> */}
               <Text my={4}>
-                Fast Feedback uses Stripe to update, change, or cancel your
-                subscription. You can also update card information and billing
-                addresses through the secure portal.
+                This tool is free and currently doesn't have any
+                settings/options yet. A logout button is the best we can offer
+                😀
               </Text>
               <Flex justify='flex-end'>
-                <Button variant='ghost' ml={4} onClick={() => signout()}>
+                <Button variant='solid' ml={4} onClick={() => signout()}>
                   Log Out
                 </Button>
-                <Button
+                {/* <Button
                   onClick={() => {
                     setBillingLoading(true);
                     goToBillingPortal(); //TODO: to add
@@ -138,7 +138,7 @@ const Account = () => {
                   }}
                 >
                   Manage Billing
-                </Button>
+                </Button> */}
               </Flex>
             </SettingsTable>
           </Flex>

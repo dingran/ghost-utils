@@ -62,6 +62,9 @@ const Navbar = (props) => {
           ) : null}
         </HStack>
         <HStack spacing={6}>
+          <Link href='https://www.dingran.me/ghost-preview-setup/' isExternal>
+            <Box fontWeight={600}> Set Up Instructions</Box>
+          </Link>
           <WrappedLink href='/faq'>FAQ</WrappedLink>
           {user ? (
             <>

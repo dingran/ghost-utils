@@ -63,9 +63,17 @@ const EmptyState = () => {
 };
 
 const SiteDetails = ({ site }) => {
+  if (!site) return null;
   return (
     <Box>
-      <ReactJson src={site} />
+      {/* <ReactJson src={site} /> */}
+      <Box>
+        <Heading as='h3' size='md'>
+          Instruction for site: {site.id}
+        </Heading>
+        <Text>Add the following line to Code Injection in Ghost</Text>
+        {`<script src="https://ghutils.dingran.me/static/ghpreview.js" data-site="${site.id}" defer></script>`}
+      </Box>
     </Box>
   );
 };
@@ -133,8 +141,7 @@ const DashboardPage = () => {
                 sites={data?.sites}
                 setSelectedSiteId={setSelectedSiteId}
               />
-              <Box>{selectedSiteId}</Box>
-              <SiteDetails site={siteData}></SiteDetails>
+              <SiteDetails site={siteData?.site}></SiteDetails>
             </>
           ) : (
             <EmptyState />
