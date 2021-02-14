@@ -51,11 +51,22 @@
     .then((response) => response.json())
     .then((data) => {
       var div = document.createElement('div');
-      var clientSettings = data.response.clientSettings;
+      var clientSettings = data.clientSettings;
       div.innerHTML = data.response.html;
-      console.log(clientSettings);
       div.className = 'ghpreview-membersonly-excerpt';
       if (ctaElement) {
+        //delete some elements
+        console.log(clientSettings);
+        var { indexOfChildrenToDelete } = clientSettings;
+        if (indexOfChildrenToDelete) {
+          var toDelete = [];
+          for (var idx of indexOfChildrenToDelete) {
+            toDelete.push(ctaElement.parentNode.children[idx]);
+          }
+          for (var ele of toDelete) {
+            ele.remove();
+          }
+        }
         ctaElement.insertAdjacentElement('beforebegin', div);
       }
     });

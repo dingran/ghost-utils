@@ -72,7 +72,6 @@ export default async (req, res) => {
 
         const data = {
           html: response.html,
-          clientSettings,
           createdAt: new Date().toISOString(),
         };
         try {
@@ -84,7 +83,11 @@ export default async (req, res) => {
       }
 
       res.statusCode = 200;
-      res.json({ response, info });
+      res.json({
+        response,
+        info,
+        clientSettings,
+      });
     } catch (error) {
       console.log(error);
       res.statusCode = 500;
