@@ -1,3 +1,4 @@
+// get and delete site based on siteId
 import { withAuth } from '@/lib/middlewares';
 import * as dbAdmin from '@/lib/db-admin';
 

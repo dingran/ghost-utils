@@ -1,5 +1,6 @@
 Next up
 
+- [ ] clean up API routes
 - [ ] need to put auth in front of post2md route
 - [ ] set up seo, at leset the link card should work in my blog, maybe use next-seo
 - [ ] design stats collection to power billing

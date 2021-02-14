@@ -1,3 +1,4 @@
+// TODO: should deprecate, along with Ghost URL and API KEY for my own site
 const GhostAdminAPI = require('@tryghost/admin-api');
 const truncate = require('truncate-html');
 import { logError } from '@/utils/logger';

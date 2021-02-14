@@ -1,3 +1,4 @@
+// convert ghost post to markdown based on siteId and slug
 const GhostAdminAPI = require('@tryghost/admin-api');
 const dbAdmin = require('@/lib/db-admin');
 import { withAuth } from '@/lib/middlewares';

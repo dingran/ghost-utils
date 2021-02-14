@@ -1,3 +1,4 @@
+// get all sites of a user
 import { withAuth } from '@/lib/middlewares';
 import { getUserSites } from '@/lib/db-admin';
 

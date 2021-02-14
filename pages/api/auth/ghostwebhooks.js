@@ -1,3 +1,4 @@
+// create Ghost webhooks bsaed on siteId
 const GhostAdminAPI = require('@tryghost/admin-api');
 const dbAdmin = require('@/lib/db-admin');
 import { withAuth } from '@/lib/middlewares';
@@ -52,7 +53,7 @@ const handler = async (req, res) => {
       const payload = {
         name: val,
         event: val,
-        target_url: `https://utils.dingran.me/api/ghosthook?siteId=${siteId}`,
+        target_url: `https://ghutils.dingran.me/api/ghosthook?siteId=${siteId}`,
         // target_url: `https://9fe4cde0519b.ngrok.io/api/ghosthook?siteId=${siteId}`,
       };
 

@@ -1,3 +1,4 @@
+// used for testing whether API key and url works in site registration process
 const GhostAdminAPI = require('@tryghost/admin-api');
 // const dbAdmin = require('@/lib/db-admin');
 
