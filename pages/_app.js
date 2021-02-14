@@ -23,6 +23,7 @@ const SEO = {
   description,
   canonical: 'https://ghutils.dingran.me',
   openGraph: {
+    site_name: 'Ghost Preview',
     type: 'website',
     locale: 'en_US',
     url: 'https://ghutils.dingran.me',
@@ -30,12 +31,17 @@ const SEO = {
     description,
     images: [
       {
-        url: 'https://ghutils.dingran.me/og.png',
+        url: ' https://7b568dcbe8b6.ngrok.io/og.jpg',
         alt: title,
         width: 594,
         height: 264,
       },
     ],
+  },
+  twitter: {
+    handle: '@ding_ran',
+    site: '@ding_ran',
+    cardType: 'summary_large_image',
   },
 };
 
