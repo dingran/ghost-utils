@@ -12,9 +12,11 @@ export default async (req, res) => {
 
   if (siteId && slug) {
     const startTime = new Date();
+    const clientSettings = {}; //hold publiclly accessible settings for the client
     const { site } = await dbAdmin.getSite(siteId);
     console.log('Get site', new Date().getTime() - startTime.getTime(), 'ms');
     console.log(site);
+    clientSettings.indexOfChildrenToDelete = site.indexOfChildrenToDelete;
 
     try {
       const { preview } = await dbAdmin.getPreview(siteId, slug);
@@ -70,6 +72,7 @@ export default async (req, res) => {
 
         const data = {
           html: response.html,
+          clientSettings,
           createdAt: new Date().toISOString(),
         };
         try {

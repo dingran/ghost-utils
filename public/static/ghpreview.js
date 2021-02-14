@@ -50,11 +50,13 @@
   fetch(previewEndpoint)
     .then((response) => response.json())
     .then((data) => {
-      const div = document.createElement('div');
+      var div = document.createElement('div');
+      var clientSettings = data.response.clientSettings;
       div.innerHTML = data.response.html;
+      console.log(clientSettings);
       div.className = 'ghpreview-membersonly-excerpt';
       if (ctaElement) {
-        ctaElement.insertAdjacentHTML('beforebegin', div);
+        ctaElement.insertAdjacentElement('beforebegin', div);
       }
     });
 })();
