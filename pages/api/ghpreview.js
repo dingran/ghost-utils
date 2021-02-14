@@ -1,22 +1,14 @@
 // this is the public version of ghost.js
 const GhostAdminAPI = require('@tryghost/admin-api');
 const dbAdmin = require('@/lib/db-admin');
+import { parseISO, format } from 'date-fns';
 import truncateHtml from '@/utils/truncateHtml';
+
+const pretty = (date) => format(parseISO(date), 'Pp');
 
 export default async (req, res) => {
   const siteId = req.query.siteId;
   const slug = req.query.slug;
-
-  //TODO: peridoically pull all posts and store their slugs
-  if (
-    slug === '' ||
-    slug === 'signup' ||
-    slug === 'signin' ||
-    slug === 'membership'
-  ) {
-    res.status(200).send({});
-    return;
-  }
 
   if (siteId && slug) {
     const startTime = new Date();
@@ -27,7 +19,23 @@ export default async (req, res) => {
     try {
       const { preview } = await dbAdmin.getPreview(siteId, slug);
       let response = null;
-      if (!preview) {
+      let info = '';
+
+      console.log('site updated', pretty(site.updatedAt));
+      console.log('site created', pretty(site.createdAt));
+      console.log('preview created', pretty(preview?.createdAt));
+      preview?.createdAt &&
+        console.log(
+          'preview created after site updated, thus ok to use:',
+          (site.updatedAt || site.createdAt) < preview.createdAt
+        );
+      // has preview and preview is created after site updated
+      if (preview && (site.updatedAt || site.createdAt) < preview.createdAt) {
+        info = 'using existing preview from db';
+        console.log(info);
+        response = preview;
+      } else {
+        info = 'creating new preview';
         const api = new GhostAdminAPI({
           url: site.apiUrl,
           key: site.apiKey,
@@ -69,20 +77,10 @@ export default async (req, res) => {
           console.log(error);
           console.log('Failed to add preview to db');
         }
-      } else {
-        // use existing preview, might bs stale
-        //TODO fix this, but checking whether the settings are updated after the preview creation time
-        console.log(site.createdAt, site.updatedAt, preview.createdAt);
-        const diffTime = new Date() - new Date(preview.createdAt);
-        const diffDays = diffTime / (1000 * 60 * 60 * 24);
-        const diffMins = diffTime / (1000 * 60);
-        console.log(diffTime, diffMins, diffDays);
-        // response = { html: 'Using exsting preview' };
-        response = preview;
       }
 
       res.statusCode = 200;
-      res.json({ response });
+      res.json({ response, info });
     } catch (error) {
       console.log(error);
       res.statusCode = 500;
