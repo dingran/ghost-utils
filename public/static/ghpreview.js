@@ -1,6 +1,7 @@
 (function () {
+  var defaultCSSSelector = 'aside[class*="upgrade-cta"]';
   var ctaElement =
-    document.querySelector('aside[class*="upgrade-cta"]') ||
+    document.querySelector(defaultCSSSelector) ||
     document.querySelector('div[class*="post-access-cta"]'); //TODO: allow custom selector
 
   if (!ctaElement) {
@@ -53,7 +54,7 @@
       div.innerHTML = data.response.html;
       div.className = 'ghpreview-membersonly-excerpt';
       if (ctaElement) {
-        ctaElement.parentNode.prepend(div);
+        ctaElement.insertAdjacentHTML('beforebegin', div);
       }
     });
 })();
