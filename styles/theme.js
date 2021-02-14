@@ -6,6 +6,9 @@ const theme = extendTheme({
       '.cryptedmail:after': {
         content: `attr(data-name) "@" attr(data-domain) "." attr(data-tld);`,
       },
+      a: {
+        textDecor: 'underline',
+      },
       'a:hover': {
         color: 'blue.500',
         textDecor: 'underline',

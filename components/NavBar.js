@@ -65,7 +65,9 @@ const Navbar = (props) => {
           <Link href='https://www.dingran.me/ghost-preview-setup/' isExternal>
             <Box fontWeight={600}> Set Up Instructions</Box>
           </Link>
-          <WrappedLink href='/faq'>FAQ</WrappedLink>
+          <WrappedLink href='/faq'>
+            <Box fontWeight={600}> FAQ</Box>
+          </WrappedLink>
           {user ? (
             <>
               <Button

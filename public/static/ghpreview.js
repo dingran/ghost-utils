@@ -2,7 +2,8 @@
   var defaultCSSSelector = 'aside[class*="upgrade-cta"]';
   var ctaElement =
     document.querySelector(defaultCSSSelector) ||
-    document.querySelector('div[class*="post-access-cta"]'); //TODO: allow custom selector
+    document.querySelector('div[class*="post-access-cta"]');
+  //TODO: allow custom selector
 
   if (!ctaElement) {
     console.log('[ghpreview]', 'Not able to find CTA element');

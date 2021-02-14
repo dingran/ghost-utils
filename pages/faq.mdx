@@ -1,4 +1,5 @@
 import PageShell from '@/components/PageShell';
+import HiddenEmail from '@/components/HiddenEmail';
 import LoginButtons from '@/components/LoginButtons';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
 import { HStack } from '@chakra-ui/react';
@@ -21,7 +22,7 @@ It's very simple:
   <LoginButtons />
 </HStack>
 
-You can read detailed setup instructions [**here**](https://www.dingran.me/ghost-preview-setup/)
+You can read detailed setup instructions 👉 &nbsp[**here**](https://www.dingran.me/ghost-preview-setup/)
 
 ## How does it work behind the scene?
 
@@ -32,30 +33,57 @@ Also very simple:
 
 You can control how much preview to offer, in terms of length percentage, the defeault is 40%.
 
+## What are some examples?
+
+- Example from [my own blog](https://www.dingran.me/memberonly-preview-demo/)
+- Example from [Looking for Wisdom](https://www.lookingforwisdom.com/courses/s1-06-a-fools-philosophy/)
+
 ## Supported themes
 
-This tool might not work with all custom themes. The following themes are verified to work:
+This tool might not work with all custom themes. The following themes should be work:
 
 1. Casper
 2. Lyra
-3. (more to come)
+3. Joben
+4. Krabi
+5. Penang
+6. (email me to verify and add yours)
 
 Feel free to reach out to me if the tool doesn't work for your theme and I'll add support for it.
 
 ## How to get help?
 
 <p>
-  Email{' '}
-  <a
-    href='#'
-    className='cryptedmail'
-    data-name='hello'
-    data-domain='dingran'
-    data-tld='me'
-    onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;"
-  ></a>.
+  Email me at <HiddenEmail />
 </p>
 
 ## Why is it free?
 
-It was simple to build and free to host, so it's free for fair use.
+It was simple to build and free to host, so it's free for fair use. Also, Ghost might release a feature for this eventually so this is a temporary hack.
+
+<HStack>
+  <div>
+    If you insist in showing some appreciation 🤩, feel free to buy me a coffee
+    here
+  </div>
+
+<a href='https://www.buymeacoffee.com/dingran' target='_blank'>
+  <img
+    src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png'
+    alt='Buy Me A Coffee'
+    width='160px'
+  /></a>
+  <script
+    type='text/javascript'
+    src='https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js'
+    data-name='bmc-button'
+    data-slug='dingran'
+    data-color='#FFDD00'
+    data-emoji=''
+    data-font='Cookie'
+    data-text='Buy me a coffee'
+    data-outline-color='#000000'
+    data-font-color='#000000'
+    data-coffee-color='#ffffff'
+  ></script>
+</HStack>
