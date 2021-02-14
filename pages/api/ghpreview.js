@@ -21,9 +21,10 @@ export default async (req, res) => {
       let response = null;
       let info = '';
 
-      console.log('site updated', pretty(site.updatedAt));
+      if (site.updatedAt) console.log('site updated', pretty(site.updatedAt));
       console.log('site created', pretty(site.createdAt));
-      console.log('preview created', pretty(preview?.createdAt));
+      if (preview?.createdAt)
+        console.log('preview created', pretty(preview?.createdAt));
       preview?.createdAt &&
         console.log(
           'preview created after site updated, thus ok to use:',
