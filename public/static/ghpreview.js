@@ -1,5 +1,8 @@
 (function () {
-  var ctaElement = document.querySelector('aside[class*="upgrade-cta"]'); //TODO: allow custom selector
+  var ctaElement =
+    document.querySelector('aside[class*="upgrade-cta"]') ||
+    document.querySelector('div[class="*post-access-cta"]'); //TODO: allow custom selector
+
   if (!ctaElement) {
     console.log('[ghpreview]', 'Not able to find CTA element');
     return;
