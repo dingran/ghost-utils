@@ -15,6 +15,13 @@ export default async (req, res) => {
 
   const slug = req?.body?.post?.current?.slug;
   const currentHtml = req?.body?.post?.current?.html;
+  const visibility = req?.body?.post?.current?.visibility;
+  if (visibility === 'public') {
+    return res
+      .status(200)
+      .json({ message: 'not generating preview for for public content' });
+  }
+
   if (!slug || !currentHtml) {
     const error = 'Bad request body, did not contain slug or html';
     console.log(error);

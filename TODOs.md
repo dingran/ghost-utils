@@ -10,6 +10,7 @@ Next up
 
 Done
 
+- [x] on use preview in db if site hasm't be updated after preview's creation time
 - [x] html to markdown converstion utils
 - [x] My sites page should have a good empty state
 - [x] set up logflare for vercel
