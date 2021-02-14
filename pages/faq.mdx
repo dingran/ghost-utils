@@ -3,12 +3,17 @@ import HiddenEmail from '@/components/HiddenEmail';
 import LoginButtons from '@/components/LoginButtons';
 import NextBreadcrumb from '@/components/NextBreadcrumb';
 import { HStack } from '@chakra-ui/react';
+import BMAC from '@/components/BMAC';
 
 export default (props) => <PageShell {...props} />;
 
 <NextBreadcrumb pageName='FAQ' pagepath='faq' />
 
 # FAQ
+
+## Why?
+
+See this [**blog post**](https://www.dingran.me/members-only-content-preview/) for context.
 
 ## How to set it up?
 
@@ -62,28 +67,6 @@ Feel free to reach out to me if the tool doesn't work for your theme and I'll ad
 It was simple to build and free to host, so it's free for fair use. Also, Ghost might release a feature for this eventually so this is a temporary hack.
 
 <HStack>
-  <div>
-    If you insist in showing some appreciation 🤩, feel free to buy me a coffee
-    here
-  </div>
-
-<a href='https://www.buymeacoffee.com/dingran' target='_blank'>
-  <img
-    src='https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png'
-    alt='Buy Me A Coffee'
-    width='160px'
-  /></a>
-  <script
-    type='text/javascript'
-    src='https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js'
-    data-name='bmc-button'
-    data-slug='dingran'
-    data-color='#FFDD00'
-    data-emoji=''
-    data-font='Cookie'
-    data-text='Buy me a coffee'
-    data-outline-color='#000000'
-    data-font-color='#000000'
-    data-coffee-color='#ffffff'
-  ></script>
+  <div>If you insist 🤩, feel free to buy me a coffee here</div>
+  <BMAC />
 </HStack>

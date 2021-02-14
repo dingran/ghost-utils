@@ -5,12 +5,39 @@ import { MDXProvider } from '@mdx-js/react';
 import MDXComponents from '@/components/MDXComponents';
 import React, { useEffect } from 'react';
 import Router from 'next/router';
+import { DefaultSeo } from 'next-seo';
 import * as Fathom from 'fathom-client';
 
 // Record a pageview when route changes
 Router.events.on('routeChangeComplete', () => {
   Fathom.trackPageview();
 });
+
+const title =
+  'Ghost Preview – Automatically add content preview for member-only posts on Ghost.';
+const description =
+  'Ghost Preview is one of the Ghost Utilities (Ghutils) that is built to make the blogging experience on Ghost platform better';
+
+const SEO = {
+  title,
+  description,
+  canonical: 'https://ghutils.dingran.me',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://ghutils.dingran.me',
+    title,
+    description,
+    images: [
+      {
+        url: 'https://ghutils.dingran.me/og.png',
+        alt: title,
+        width: 594,
+        height: 264,
+      },
+    ],
+  },
+};
 
 const App = ({ Component, pageProps }) => {
   // Initialize Fathom when the app loads
@@ -25,6 +52,7 @@ const App = ({ Component, pageProps }) => {
     <ChakraProvider theme={theme}>
       <AuthProvider>
         <MDXProvider components={MDXComponents}>
+          <DefaultSeo {...SEO} />
           <Component {...pageProps} />
         </MDXProvider>
       </AuthProvider>

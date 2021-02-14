@@ -23,6 +23,7 @@
     "framer-motion": "^3.3.0",
     "next": "10.0.5",
     "next-images": "^1.7.0",
+    "next-seo": "^4.19.0",
     "pino": "^6.11.1",
     "pino-logflare": "^0.3.7",
     "pino-pretty": "^4.5.0",
