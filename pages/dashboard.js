@@ -134,7 +134,7 @@ const DashboardPage = () => {
             pagePath='dashboard'
           ></NextBreadcrumb>
 
-          {data?.sites.length ? (
+          {(!data && !error) /*i.e still loading*/ || data?.sites.length ? (
             <>
               <DashboardHeader></DashboardHeader>
               <SiteTable
