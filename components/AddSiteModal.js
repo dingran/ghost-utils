@@ -46,6 +46,8 @@ const AddSiteModal = ({ children }) => {
       url,
       apiKey,
       apiUrl,
+      previewRatio: 0.4,
+      maxLength: 10000,
     };
 
     let siteId = null;

@@ -87,7 +87,7 @@ const DashboardPage = () => {
     Router.push('/');
   }
 
-  const { data, error } = useSWR(
+  const { data, error, isValidating } = useSWR(
     user ? ['/api/auth/sites', user.token] : null,
     fetcher
   );
@@ -134,7 +134,7 @@ const DashboardPage = () => {
             pagePath='dashboard'
           ></NextBreadcrumb>
 
-          {(!data && !error) /*i.e still loading*/ || data?.sites.length ? (
+          {isValidating || data?.sites.length ? (
             <>
               <DashboardHeader></DashboardHeader>
               <SiteTable

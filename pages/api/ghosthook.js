@@ -40,7 +40,8 @@ export default async (req, res) => {
     data.html = truncateHtml(
       currentHtml,
       site.previewLength,
-      site.previewRatio
+      site.previewRatio,
+      site.maxLength
     );
 
     console.log('truncatd html');
