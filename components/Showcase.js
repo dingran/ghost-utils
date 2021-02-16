@@ -22,6 +22,17 @@ const Showcase = () => {
   return (
     <>
       <Divider></Divider>
+      <Box>
+        <NextLink href='/faq#what-are-some-examples' passHref>
+          <Link>
+            <Text fontSize='lg' fontWeight='bold'>
+              👉 <span>&nbsp;&nbsp;</span>See who else are using this in their
+              Ghost sites
+            </Text>
+          </Link>
+        </NextLink>
+      </Box>
+      <Divider></Divider>
       <Box my={16}>
         <Center mb={8}>
           <Heading as='h2' size='lg'>
@@ -38,7 +49,6 @@ const Showcase = () => {
           <img src={require('../public/images/demo.webp')} />
         </Box>
       </Box>
-
       <Divider></Divider>
       {/* <Box mt={8}>
         <Center mb={8}>

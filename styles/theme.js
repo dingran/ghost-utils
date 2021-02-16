@@ -9,9 +9,11 @@ const theme = extendTheme({
       a: {
         textDecor: 'underline',
       },
+      'h1 > a, h2 > a, h3 > a, h4 > a': {
+        textDecor: 'none',
+      },
       'a:hover': {
         color: 'blue.500',
-        textDecor: 'underline',
       },
       fonts: {
         heading: 'Georgia, serif',
