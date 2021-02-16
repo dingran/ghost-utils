@@ -98,9 +98,10 @@ const AddSiteModal = ({ children }) => {
   };
 
   const validateApiKey = async (apiKey) => {
-    console.log('validating apikey');
-    const apiUrl = getValues('apiUrl');
-    console.log(apiUrl, apiKey);
+    // console.log('validating apikey');
+    let apiUrl = getValues('apiUrl');
+    apiUrl = apiUrl.replace(/\/$/, '');
+    // console.log(apiUrl, apiKey);
     if (apiUrl && apiKey) {
       const res = await fetch(
         `/api/ghostApiTest?apiUrl=${apiUrl}&apiKey=${apiKey}`,
@@ -108,7 +109,7 @@ const AddSiteModal = ({ children }) => {
           method: 'GET',
         }
       );
-      console.log(res.status);
+      // console.log(res.status);
       if (res.status !== 200) {
         setApiValidated(false);
         return false;
@@ -212,6 +213,7 @@ const AddSiteModal = ({ children }) => {
                     startsWithHttp,
                     // reachUrl,
                   },
+                  setValueAs: (str) => str.replace(/\/$/, ''),
                 })}
               />
 
