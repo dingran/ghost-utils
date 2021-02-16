@@ -5,7 +5,6 @@ const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [
-      require('remark-capitalize'),
       require('remark-slug'),
       [require('remark-autolink-headings'), { behavior: 'wrap' }],
     ],
