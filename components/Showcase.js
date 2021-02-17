@@ -16,22 +16,26 @@ import {
   Text,
   Divider,
 } from '@chakra-ui/react';
+import BMAC from '@/components/BMAC';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 const Showcase = () => {
   return (
     <>
       <Divider></Divider>
-      <Box>
+      <Flex justify='space-between' align='center'>
         <NextLink href='/faq#what-are-some-examples' passHref>
           <Link>
-            <Text fontSize='lg' fontWeight='bold'>
-              👉 <span>&nbsp;&nbsp;</span>See who else are using this in their
-              Ghost sites
+            <Text fontSize='lg' fontWeight='bold' textDecor='underline'>
+              👉 <span>&nbsp;&nbsp;</span>See who are already using Ghost
+              Preview
             </Text>
           </Link>
         </NextLink>
-      </Box>
+        <Box mr={8}>
+          <BMAC />
+        </Box>
+      </Flex>
       <Divider></Divider>
       <Box my={16}>
         <Center mb={8}>

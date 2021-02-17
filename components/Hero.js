@@ -20,6 +20,7 @@ const Hero = () => {
       flexDir={['column', 'column', 'column', 'row']}
       w='full'
       align='center'
+      justify='space-between'
       mb={8}
     >
       <Box mt={4} width='70%'>
@@ -42,7 +43,7 @@ const Hero = () => {
         </Box>
         {/* <Text>Something</Text> */}
       </Box>
-      <Box m='0 auto'>
+      <Box mr={8}>
         <LoginButtons></LoginButtons>
       </Box>
     </Flex>
