@@ -21,8 +21,15 @@
   var domainUrl = ghpreviewScript.src.replace(url.pathname, '');
   var previewEndpoint = `${domainUrl}/api/ghpreview?siteId=${siteId}&slug=${slug}`;
 
-  var style = document.createElement('style'),
-    css = `
+  console.log(previewEndpoint);
+  fetch(previewEndpoint)
+    .then((response) => response.json())
+    .then((data) => {
+      var clientSettings = data.clientSettings;
+      console.log(clientSettings);
+      var bgColor = clientSettings?.bgColor || '255, 255, 255';
+      var style = document.createElement('style');
+      var css = `
   .ghpreview-membersonly-excerpt {
     position: relative;
   }
@@ -38,21 +45,16 @@
     margin-right: -50vw;
     background: linear-gradient(
       to top,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 0.9) 30%,
-      rgba(255, 255, 255, 0) 100%
+      rgba(${bgColor}, 1) 0%,
+      rgba(${bgColor}, 0.9) 30%,
+      rgba(${bgColor}, 0) 100%
     );
-  }`,
-    head = document.head || document.getElementsByTagName('head')[0];
-  style.appendChild(document.createTextNode(css));
-  head.appendChild(style);
+  }`;
+      var head = document.head || document.getElementsByTagName('head')[0];
+      style.appendChild(document.createTextNode(css));
+      head.appendChild(style);
 
-  console.log(previewEndpoint);
-  fetch(previewEndpoint)
-    .then((response) => response.json())
-    .then((data) => {
       var div = document.createElement('div');
-      var clientSettings = data.clientSettings;
       div.innerHTML = data.response.html;
       div.className = 'ghpreview-membersonly-excerpt';
       if (ctaElement) {

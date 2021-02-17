@@ -17,6 +17,7 @@ export default async (req, res) => {
     console.log('Get site', new Date().getTime() - startTime.getTime(), 'ms');
     console.log(site);
     clientSettings.indexOfChildrenToDelete = site.indexOfChildrenToDelete;
+    clientSettings.bgColor = site.bgColor;
 
     try {
       const { preview } = await dbAdmin.getPreview(siteId, slug);

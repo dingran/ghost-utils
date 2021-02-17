@@ -7,6 +7,7 @@ Next up
 - [ ] design stats collection to power billing
 - [ ] can I use logflare as Google Analytics (disable console logging only send to log drain)
 - [ ] establish the pattern of axios call inside of db.js from client side
+- [ ] switch to plausible analytics
 
 Done
 
