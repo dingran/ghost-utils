@@ -21,13 +21,27 @@
   var domainUrl = ghpreviewScript.src.replace(url.pathname, '');
   var previewEndpoint = `${domainUrl}/api/ghpreview?siteId=${siteId}&slug=${slug}`;
 
+  var bodyBgColor = null;
+
+  try {
+    bodyBgColor = getComputedStyle(document.body)
+      .backgroundColor.replace('rgb(', '')
+      .replace(')', '');
+
+    if (bodyBgColor.split(',').length !== 3) {
+      bodyBgColor = null;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
   console.log(previewEndpoint);
   fetch(previewEndpoint)
     .then((response) => response.json())
     .then((data) => {
       var clientSettings = data.clientSettings;
       console.log('Ghost Preview clientSettings', clientSettings);
-      var bgColor = clientSettings?.bgColor || '255, 255, 255';
+      var bgColor = clientSettings?.bgColor || bodyBgColor || '255, 255, 255';
       var style = document.createElement('style');
       var css = `
   .ghpreview-membersonly-excerpt {
