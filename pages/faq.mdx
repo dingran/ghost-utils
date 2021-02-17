@@ -38,6 +38,20 @@ Also very simple:
 
 You can control how much preview to offer, in terms of length percentage, the defeault is 40%.
 
+## Can I control how much preview to show?
+
+Yes! There are two options you can use to customize your previews.
+
+1. **Preview Ratio** (default 0.4): it should be between 0.0 and 1.0 and is the primary parameter to control how much preview to show. 0.4 means preview will show 40% of the total post length.
+2. **Max Length** (default 10000): This is the maximum number of characters to show. The main reason we have this option is that a ratio-based preview might be too long for very long posts (thousands of words). This max length parameter will limit the preview to be at most this length.
+
+## How to remove this tool from my Ghost site?
+
+Easy:
+
+1. Delete the code injection. This basically disables it.
+2. Optionally, for a deeper clean, you should (1) delete the site in your Ghost Preview dashboard, this will delete all the webhooks and site info that this tool has about your Ghost site (2) in Ghost, you should delete the integration.
+
 ## What are some examples?
 
 - Example from [Looking for Wisdom](https://www.lookingforwisdom.com/courses/s01-7-the-science-of-wisdom/)
@@ -67,20 +81,6 @@ Feel free to reach out to me if the tool doesn't work for your theme and I'll ad
 <p>
   Email me at <HiddenEmail />
 </p>
-
-## Can I control how much preview to show?
-
-Yes! There are two options you can use to customize your previews.
-
-1. **Preview Ratio** (default 0.4): it should be between 0.0 and 1.0 and is the primary parameter to control how much preview to show. 0.4 means preview will show 40% of the total post length.
-2. **Max Length** (default 10000): This is the maximum number of characters to show. The main reason we have this option is that a ratio-based preview might be too long for very long posts (thousands of words). This max length parameter will limit the preview to be at most this length.
-
-## How to remove this tool from my Ghost site?
-
-Easy:
-
-1. Delete the code injection. This basically disables it.
-2. Optionally, for a deeper clean, you should (1) delete the site in your Ghost Preview dashboard, this will delete all the webhooks and site info that this tool has about your Ghost site (2) in Ghost, you should delete the integration.
 
 ## Why is it free?
 
