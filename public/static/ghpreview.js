@@ -26,7 +26,7 @@
     .then((response) => response.json())
     .then((data) => {
       var clientSettings = data.clientSettings;
-      console.log(clientSettings);
+      console.log('Ghost Preview clientSettings', clientSettings);
       var bgColor = clientSettings?.bgColor || '255, 255, 255';
       var style = document.createElement('style');
       var css = `
@@ -59,7 +59,6 @@
       div.className = 'ghpreview-membersonly-excerpt';
       if (ctaElement) {
         //delete some elements
-        console.log(clientSettings);
         var { indexOfChildrenToDelete } = clientSettings;
         if (indexOfChildrenToDelete) {
           var toDelete = [];
