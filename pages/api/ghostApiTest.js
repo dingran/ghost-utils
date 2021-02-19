@@ -16,20 +16,21 @@ export default async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.statusCode = 400;
-    res.json({
-      error,
-    });
-    return;
+    return res.status(400).json({ error: error.message });
   }
 
   try {
     const response = await api.posts.browse({ limit: 1 }); // test call
-    res.statusCode = 200;
-    res.json({ response });
+
+    // need to check that repsponse is not undefined
+    if (typeof response === 'undefined') {
+      const error = new Error('response is undefined, probably wrong api Url');
+      error.status = 400;
+      throw error;
+    }
+    return res.status(200).json({ response });
   } catch (error) {
     console.log(error);
-    res.statusCode = 500;
-    res.json({ error });
+    return res.status(error.status || 500).json({ error: error.message });
   }
 };
