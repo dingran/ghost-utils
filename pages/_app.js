@@ -3,15 +3,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from '@/styles/theme';
 import { MDXProvider } from '@mdx-js/react';
 import MDXComponents from '@/components/MDXComponents';
-import React, { useEffect } from 'react';
-import Router from 'next/router';
+import React from 'react';
 import { DefaultSeo } from 'next-seo';
-import * as Fathom from 'fathom-client';
-
-// Record a pageview when route changes
-Router.events.on('routeChangeComplete', () => {
-  Fathom.trackPageview();
-});
 
 const title =
   'Ghost Preview – Automatically add content preview for member-only posts on Ghost.';
@@ -46,14 +39,6 @@ const SEO = {
 };
 
 const App = ({ Component, pageProps }) => {
-  // Initialize Fathom when the app loads
-  useEffect(() => {
-    Fathom.load('WUGXVMLD', {
-      url: 'https://amphibian.dingran.me/script.js',
-      includedDomains: ['ghutils.dingran.me'],
-    });
-  }, []);
-
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
