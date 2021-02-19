@@ -2,7 +2,8 @@
   var defaultCSSSelector = 'aside[class*="upgrade-cta"]';
   var ctaElement =
     document.querySelector(defaultCSSSelector) ||
-    document.querySelector('div[class*="post-access-cta"]');
+    document.querySelector('div[class*="post-access-cta"]') ||
+    document.querySelector('div[class*="members-cta"]');
   //TODO: allow custom selector
 
   if (!ctaElement) {
