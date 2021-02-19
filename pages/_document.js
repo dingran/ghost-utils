@@ -13,7 +13,7 @@ class MyDocument extends Document {
             async
             defer
             data-domain='ghutils.dingran.me'
-            src='https://plausible.io/js/plausible.js'
+            src='https://plausible.dingran.me/js/index.js'
           ></script>
           <script
             type='text/javascript'
