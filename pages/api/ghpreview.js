@@ -52,7 +52,16 @@ export default async (req, res) => {
           'ms'
         );
 
-        response = await api.posts.read({ slug: slug, formats: 'html' });
+        try {
+          response = await api.posts.read({ slug: slug, formats: 'html' });
+        } catch (error) {
+          if (error.type === 'NotFoundError') {
+            response = await api.pages.read({ slug: slug, formats: 'html' });
+          } else {
+            console.log(error);
+            throw error;
+          }
+        }
         console.log(
           'Read post',
           new Date().getTime() - startTime.getTime(),
