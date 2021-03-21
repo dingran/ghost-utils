@@ -50,6 +50,7 @@ const EditSiteModal = ({ site: siteToEdit }) => {
   // useEffect(() => {
   //   db.getSite(siteToEdit.id).then((data) => {
   //     reset(data);
+  //     console.log(data);
   //   });
   // }, [isOpen]); // calls on every Open of the modal
 
@@ -81,7 +82,13 @@ const EditSiteModal = ({ site: siteToEdit }) => {
 
       await db.updateSite(siteToEdit.id, newSiteData);
 
-      reset(newSiteData);
+      reset({
+        id: siteToEdit.id, // previously with reset(newsSiteData) we missed id field, it seems prevent submit button from working, probably due to silently failed validation
+        name: newSiteData.name,
+        previewRatio: newSiteData.previewRatio,
+        maxLength: newSiteData.maxLength,
+      });
+      console.log(newSiteData);
 
       toast({
         title: 'Success! 🎉',
@@ -117,7 +124,14 @@ const EditSiteModal = ({ site: siteToEdit }) => {
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent as='form'>
+        <ModalContent
+          as='form'
+          onSubmit={handleSubmit((formData) => {
+            console.log('handleSubmit called');
+            onUpdateSite(formData);
+            onClose();
+          })}
+        >
           <ModalHeader fontWeight='bold'>Edit Site Settings</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
@@ -217,10 +231,10 @@ const EditSiteModal = ({ site: siteToEdit }) => {
                 color='#194D4C'
                 fontWeight='medium'
                 type='submit'
-                onClick={handleSubmit((formData) => {
-                  onUpdateSite(formData);
-                  onClose();
-                })}
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   console.log('Submit button cilcked');
+                // }}
               >
                 Update
               </Button>
