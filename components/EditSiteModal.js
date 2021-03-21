@@ -231,10 +231,6 @@ const EditSiteModal = ({ site: siteToEdit }) => {
                 color='#194D4C'
                 fontWeight='medium'
                 type='submit'
-                // onClick={(e) => {
-                //   e.preventDefault();
-                //   console.log('Submit button cilcked');
-                // }}
               >
                 Update
               </Button>
