@@ -16,6 +16,14 @@ export default async (req, res) => {
     const { site } = await dbAdmin.getSite(siteId);
     console.log('Get site', new Date().getTime() - startTime.getTime(), 'ms');
     console.log(site);
+    if (site.failed) {
+      res.statusCode = 400;
+      res.json({
+        error: `site ${site.id} does not exist, please delete your ghutil client script`,
+      });
+      return;
+    }
+
     clientSettings.indexOfChildrenToDelete = site.indexOfChildrenToDelete;
     clientSettings.bgColor = site.bgColor;
 
