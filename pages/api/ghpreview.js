@@ -19,7 +19,7 @@ export default async (req, res) => {
     if (site.failed) {
       res.statusCode = 400;
       res.json({
-        error: `site ${site.id} does not exist, please delete your ghutil client script`,
+        error: `Your site ${site.id} does not exist, please delete your ghutil client script`,
       });
       return;
     }

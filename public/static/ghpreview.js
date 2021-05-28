@@ -41,7 +41,7 @@
     .then((response) => response.json())
     .then((data) => {
       if (data.error) {
-        console.log(data.error);
+        console.log(`%c ${data.error}`, 'color: red');
         return;
       }
       var clientSettings = data.clientSettings;
