@@ -40,6 +40,10 @@
   fetch(previewEndpoint)
     .then((response) => response.json())
     .then((data) => {
+      if (data.error) {
+        console.log(data.error);
+        return;
+      }
       var clientSettings = data.clientSettings;
       console.log('Ghost Preview clientSettings', clientSettings);
       var bgColor = clientSettings?.bgColor || bodyBgColor || '255, 255, 255';
